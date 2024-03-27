@@ -14,6 +14,8 @@ enum class ESign : uint8
 	E
 };
 
+
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UChess_PlayerInterface : public UInterface

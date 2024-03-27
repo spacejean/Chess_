@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Tile.h"
+#include "BasePiece.h"
 #include "GameFramework/Actor.h"
 #include "GameField.generated.h"
 
@@ -20,9 +21,17 @@ public:
 	UPROPERTY(Transient)
 	TArray<ATile*> TileArray;
 
+	// keeps track of Pieces
+	UPROPERTY(Transient)
+	TArray<ABasePiece*> PieceArray;
+
 	//given a position returns a tile
 	UPROPERTY(Transient)
 	TMap<FVector2D, ATile*> TileMap;
+
+	//given a position returns a Piece
+	UPROPERTY(Transient)
+	TMap<FVector2D, ABasePiece*> PieceMap;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float NormalizedCellPadding;
@@ -45,6 +54,10 @@ public:
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATile> TileClass;
+
+	// TSubclassOf template class that provides UClass type safety
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABasePiece> PieceClass;
 
 	// tile padding dimension
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -69,6 +82,9 @@ public:
 
 	// generate an empty game field
 	void GenerateField();
+
+	//generate pieces
+	void GeneratePieces();
 
 	// return a (x,y) position given a hit (click) on a field tile
 	FVector2D GetPosition(const FHitResult& Hit);
