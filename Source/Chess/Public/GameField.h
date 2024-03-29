@@ -54,11 +54,25 @@ public:
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATile> TileClass;
-
+	
+	
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABasePiece> PieceClass;
+	/*
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABasePiece> PieceKnightClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABasePiece> PieceKingClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABasePiece> PieceQueenClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABasePiece> PiecePawnClass;
+
+	*/
 	// tile padding dimension
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float CellPadding;

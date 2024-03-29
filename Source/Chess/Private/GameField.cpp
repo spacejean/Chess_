@@ -106,19 +106,26 @@ void AGameField::GenerateField()
 
 void AGameField::GeneratePieces()
 {
-	int32 x = 0;
-	int32 y = 3;
-	if ((x == 0) && (y == 3)) {
-		FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-		ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(PieceClass, Location, FRotator::ZeroRotator);
-		UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-		Obj->SetMaterial(Material);
-		const float TileScale = TileSize / 100;
-		Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-		Obj->SetGridPosition(x, y);
-		//PieceArray.Add(Obj);
-		//PieceMap.Add(FVector2D(x, y), Obj);
+
+	for (int32 x = 0; x < Size; x++)
+	{
+		for (int32 y = 0; y < Size; y++)
+		{
+			if (x == 1){
+				FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+				ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(PieceClass, Location, FRotator::ZeroRotator);
+				UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+				Obj->SetMaterial(Material);
+				const float TileScale = TileSize / 100;
+				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+				Obj->SetGridPosition(x, y);
+				//PieceArray.Add(Obj);
+				//PieceMap.Add(FVector2D(x, y), Obj);
+			}
+		}
 	}
+
+	
 }
 
 FVector2D AGameField::GetPosition(const FHitResult& Hit)
