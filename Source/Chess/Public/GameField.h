@@ -5,6 +5,12 @@
 #include "CoreMinimal.h"
 #include "Tile.h"
 #include "BasePiece.h"
+#include "ChessKing.h"
+#include "ChessQueen.h"
+#include "ChessBishop.h"
+#include "ChessKnight.h"
+#include "ChessRook.h"
+#include "ChessPawn.h"
 #include "GameFramework/Actor.h"
 #include "GameField.generated.h"
 
@@ -59,6 +65,44 @@ public:
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABasePiece> PieceClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessKing> WKingClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessKing> BKingClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessQueen> WQueenClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessQueen> BQueenClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessBishop> WBishopClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessBishop> BBishopClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessKnight> WKnightClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessKnight> BKnightClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessRook> WRookClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessRook> BRookClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessPawn> WPawnClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AChessPawn> BPawnClass;
+
+
 	/*
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABasePiece> PieceKnightClass;

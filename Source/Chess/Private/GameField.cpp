@@ -111,16 +111,155 @@ void AGameField::GeneratePieces()
 	{
 		for (int32 y = 0; y < Size; y++)
 		{
-			if (x == 1){
+			if (x == 1)
+			{
 				FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-				ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(PieceClass, Location, FRotator::ZeroRotator);
-				UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-				Obj->SetMaterial(Material);
+				AChessPawn* Obj = GetWorld()->SpawnActor<AChessPawn>(WPawnClass, Location, FRotator::ZeroRotator);
+				//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+				//Obj->SetMaterial(Material);
 				const float TileScale = TileSize / 100;
 				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
 				Obj->SetGridPosition(x, y);
-				//PieceArray.Add(Obj);
-				//PieceMap.Add(FVector2D(x, y), Obj);
+				PieceArray.Add(Obj);
+				PieceMap.Add(FVector2D(x, y), Obj);
+			}
+			else if (x == 6) 
+				{
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessPawn* Obj = GetWorld()->SpawnActor<AChessPawn>(BPawnClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+			else if (x == 0)
+			{
+				if (y == 0 || y == 7) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessRook* Obj = GetWorld()->SpawnActor<AChessRook>(WRookClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+				else if(y==1 || y==6){
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessKnight* Obj = GetWorld()->SpawnActor<AChessKnight>(WKnightClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+				else if (y == 2 || y==5) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessBishop* Obj = GetWorld()->SpawnActor<AChessBishop>(WBishopClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+				else if (y == 3) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessQueen* Obj = GetWorld()->SpawnActor<AChessQueen>(WQueenClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+				else if (y == 4) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessKing* Obj = GetWorld()->SpawnActor<AChessKing>(WKingClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+
+			}
+			else if (x == 7)
+			{
+				if (y == 0 || y == 7) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessRook* Obj = GetWorld()->SpawnActor<AChessRook>(BRookClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+				else if (y == 1 || y == 6) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessKnight* Obj = GetWorld()->SpawnActor<AChessKnight>(BKnightClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+				else if (y == 2 || y == 5) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessBishop* Obj = GetWorld()->SpawnActor<AChessBishop>(BBishopClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+				else if (y == 3) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessQueen* Obj = GetWorld()->SpawnActor<AChessQueen>(BQueenClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+				else if (y == 4) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					AChessKing* Obj = GetWorld()->SpawnActor<AChessKing>(BKingClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetGridPosition(x, y);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+
+
 			}
 		}
 	}
