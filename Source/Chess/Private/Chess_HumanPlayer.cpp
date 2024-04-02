@@ -81,7 +81,7 @@ void AChess_HumanPlayer::OnClick()
 		{
 			if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
 			{
-				// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
 				CurrTile->SetTileStatus(PlayerNumber, ETileStatus::OCCUPIED);
 				FVector SpawnPosition = CurrTile->GetActorLocation();
 				AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());

@@ -39,9 +39,12 @@ public:
 	UPROPERTY(Transient)
 	TMap<FVector2D, ABasePiece*> PieceMap;
 
+
+	//NONVA
+	/*
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float NormalizedCellPadding;
-
+	*/
 	static const int32 NOT_ASSIGNED = -1;
 
 	// BlueprintAssignable Usable with Multicast Delegates only. Exposes the property for assigning in Blueprints.
@@ -53,6 +56,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Size;
 
+	//NONVA
 	// size of winning line
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 WinSize;
@@ -117,6 +121,7 @@ public:
 	TSubclassOf<ABasePiece> PiecePawnClass;
 
 	*/
+	//NONVA
 	// tile padding dimension
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float CellPadding;
@@ -128,8 +133,9 @@ public:
 	// Sets default values for this actor's properties
 	AGameField();
 
+	//NONVA
 	// Called when an instance of this class is placed (in editor) or spawned
-	virtual void OnConstruction(const FTransform& Transform) override;
+	//virtual void OnConstruction(const FTransform& Transform) override;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -149,6 +155,10 @@ public:
 
 	// return the array of tile pointers
 	TArray<ATile*>& GetTileArray();
+
+	//return the array of piece pointers
+	TArray<ABasePiece*>& GetPieceArray();
+
 
 	// return a relative position given (x,y) position
 	FVector GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const;

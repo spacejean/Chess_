@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+//TODO cambiare TileScale per PieceScale
 
 #include "GameField.h"
 #include "Kismet/GameplayStatics.h"
@@ -11,25 +11,28 @@ AGameField::AGameField()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+	//NONVA
 	// size of winnning line
 	WinSize = 3;
 	// size of the field (3x3)
 	Size = 8;
 	// tile dimension
 	TileSize = 120;
+	//NONVA
 	// tile padding dimension
 	CellPadding = 20;
 
 
 }
 
-void AGameField::OnConstruction(const FTransform& Transform)
+//NONVA
+/*void AGameField::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	//normalized tilepadding
 	NormalizedCellPadding = FMath::RoundToDouble(((TileSize) / TileSize) * 100) / 100;
 }
-
+*/
 // Called when the game starts or when spawned
 void AGameField::BeginPlay()
 {
@@ -119,7 +122,7 @@ void AGameField::GeneratePieces()
 				//Obj->SetMaterial(Material);
 				const float TileScale = TileSize / 100;
 				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-				Obj->SetGridPosition(x, y);
+				Obj->SetPiecePosition(x, y);
 				PieceArray.Add(Obj);
 				PieceMap.Add(FVector2D(x, y), Obj);
 			}
@@ -131,7 +134,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -144,7 +147,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -156,7 +159,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -167,7 +170,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -179,7 +182,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -191,7 +194,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -207,7 +210,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -219,7 +222,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -230,7 +233,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -242,7 +245,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -254,7 +257,7 @@ void AGameField::GeneratePieces()
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetGridPosition(x, y);
+					Obj->SetPiecePosition(x, y);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -277,11 +280,24 @@ TArray<ATile*>& AGameField::GetTileArray()
 	return TileArray;
 }
 
+TArray<ABasePiece*>& AGameField::GetPieceArray()
+{
+	return PieceArray;
+}
+
+/*
 FVector AGameField::GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const
 {
 	return TileSize * NormalizedCellPadding * FVector(InX, InY, 0);
 }
+*/
 
+FVector AGameField::GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const
+{
+	return TileSize * FVector(InX, InY, 0);
+}
+
+/*
 FVector2D AGameField::GetXYPositionByRelativeLocation(const FVector& Location) const
 {
 	const double x = Location[0] / (TileSize * NormalizedCellPadding);
@@ -289,6 +305,16 @@ FVector2D AGameField::GetXYPositionByRelativeLocation(const FVector& Location) c
 	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), x, y));
 	return FVector2D(x, y);
 }
+*/
+
+FVector2D AGameField::GetXYPositionByRelativeLocation(const FVector& Location) const
+{
+	const double x = Location[0] / (TileSize );
+	const double y = Location[1] / (TileSize );
+	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), x, y));
+	return FVector2D(x, y);
+}
+
 
 bool AGameField::IsWinPosition(const FVector2D Position) const
 {

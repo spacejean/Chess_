@@ -38,8 +38,9 @@ void AChess_GameMode::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("Game Field is null"));
 	}
 
-	float CameraPosX = ((GField->TileSize * (FieldSize + ((FieldSize - 1) * GField->NormalizedCellPadding) - (FieldSize - 1))) / 2) - (GField->TileSize / 2);
-	FVector CameraPos(CameraPosX, CameraPosX, 1000.0f);
+	//float CameraPosX = ((GField->TileSize * (FieldSize + ((FieldSize - 1) * GField->NormalizedCellPadding) - (FieldSize - 1))) / 2) - (GField->TileSize / 2);
+	float CameraPosX = ((GField->TileSize * (FieldSize ) )/ 2) ;
+	FVector CameraPos(CameraPosX, CameraPosX, 900.0f);
 	HumanPlayer->SetActorLocationAndRotation(CameraPos, FRotationMatrix::MakeFromX(FVector(0, 0, -1)).Rotator());
 
 	// Human player = 0
