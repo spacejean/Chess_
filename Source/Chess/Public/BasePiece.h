@@ -28,6 +28,10 @@ enum class EPieceType : uint8
 	KING
 };
 
+enum class EPieceStatus : uint8 {
+	Vuota
+};
+
 UCLASS()
 class CHESS_API ABasePiece : public AActor
 {
@@ -36,11 +40,14 @@ class CHESS_API ABasePiece : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABasePiece();
+	// set the player owner 
+	void SetPieceOwner(const int32 POwner);
+
 	// set the player owner and the status of a tile
-	void SetPieceColor(const int32 POwner, const EPieceColor PieceColor);
+	void SetPieceColor( const EPieceColor PieceColor);
 
 	// set the player owner and the type of a piece
-	void SetPieceType(const int32 POwner, const EPieceType PieceType);
+	void SetPieceType(const EPieceType PieceType);
 
 	// get the Piece color
 	EPieceColor GetPieceColor();
@@ -49,7 +56,7 @@ public:
 	EPieceType GetPieceType();
 
 	// get the Piece owner
-	int32 GetOwner();
+	int32 GetPieceOwner();
 
 	// set the (x, y) position
 	void SetPiecePosition(const double InX, const double InY);
@@ -59,6 +66,20 @@ public:
 
 	// Set material function
 	void SetMaterial(class UMaterialInterface* Material);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	EPieceColor PColor;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EPieceType PType;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 PieceOwner;
+
+	// (x, y) position of the tile
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector2D PieceGridPosition;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -68,19 +89,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* StaticMeshComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	EPieceColor PColor;
-
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	EPieceType PType;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int32 PieceOwner;
-
-	// (x, y) position of the tile
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector2D PieceGridPosition;
+	
 private:
 	UMaterialInterface* CurrentMaterial;
 public:	

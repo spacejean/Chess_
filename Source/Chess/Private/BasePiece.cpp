@@ -24,16 +24,19 @@ ABasePiece::ABasePiece()
 	PieceGridPosition = FVector2D(0, 0);
 }
 
-void ABasePiece::SetPieceColor(const int32 POwner, const EPieceColor PieceColor)
+void ABasePiece::SetPieceOwner(const int32 POwner)
 {
 	PieceOwner = POwner;
+}
+
+void ABasePiece::SetPieceColor(const EPieceColor PieceColor)
+{
 	PColor = PieceColor;
 
 }
 
-void ABasePiece::SetPieceType(const int32 POwner, const EPieceType PieceType)
+void ABasePiece::SetPieceType(const EPieceType PieceType)
 {
-		PieceOwner = POwner;
 		PType = PieceType;
 
 }
@@ -48,7 +51,7 @@ EPieceType ABasePiece::GetPieceType()
 	return PType;
 }
 
-int32 ABasePiece::GetOwner()
+int32 ABasePiece::GetPieceOwner()
 {
 	return PieceOwner;
 }

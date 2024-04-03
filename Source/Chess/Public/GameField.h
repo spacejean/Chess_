@@ -71,40 +71,40 @@ public:
 	TSubclassOf<ABasePiece> PieceClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessKing> WKingClass;
+	TSubclassOf<ABasePiece> WKingClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessKing> BKingClass;
+	TSubclassOf<ABasePiece> BKingClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessQueen> WQueenClass;
+	TSubclassOf<ABasePiece> WQueenClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessQueen> BQueenClass;
+	TSubclassOf<ABasePiece> BQueenClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessBishop> WBishopClass;
+	TSubclassOf<ABasePiece> WBishopClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessBishop> BBishopClass;
+	TSubclassOf<ABasePiece> BBishopClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessKnight> WKnightClass;
+	TSubclassOf<ABasePiece> WKnightClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessKnight> BKnightClass;
+	TSubclassOf<ABasePiece> BKnightClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessRook> WRookClass;
+	TSubclassOf<ABasePiece> WRookClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessRook> BRookClass;
+	TSubclassOf<ABasePiece> BRookClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessPawn> WPawnClass;
+	TSubclassOf<ABasePiece> WPawnClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AChessPawn> BPawnClass;
+	TSubclassOf<ABasePiece> BPawnClass;
 
 
 	/*

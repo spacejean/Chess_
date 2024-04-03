@@ -13,8 +13,7 @@ AChess_HumanPlayer::AChess_HumanPlayer()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	
 	// Set this pawn to be controlled by the lowest-numbered player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	// create a camera component
@@ -75,18 +74,30 @@ void AChess_HumanPlayer::OnClick()
 	FHitResult Hit = FHitResult(ForceInit);
 	// GetHitResultUnderCursor function sends a ray from the mouse position and gives the corresponding hit results
 	GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursor(ECollisionChannel::ECC_Pawn, true, Hit);
-	if (Hit.bBlockingHit && IsMyTurn)
-	{
-		if (ATile* CurrTile = Cast<ATile>(Hit.GetActor()))
+	if (Hit.bBlockingHit /* && IsMyTurn */ )
+	{	
+		//controlla se l'oggetto colpito è un pezzo degli scacchi
+		if (ABasePiece* CurrPiece = Cast<ABasePiece>(Hit.GetActor()))
 		{
-			if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
+			//verifico se è il turno del giocatore e il pezzo colpito è del colore giusto 
+			//if (IsMyTurn && HitPiece->GetPieceColor() == CurrentPlayerColor)
+			if (CurrPiece->GetPieceColor() == EPieceColor::WHITE)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
+
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("es blANCOOOOO"));
+				CurrPiece->GetPieceType();
+				//iMPLEMento movimiento del peon de todas las piezas
+				
+				//
+				
+				FVector2D Destination;
+
+				/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
 				CurrTile->SetTileStatus(PlayerNumber, ETileStatus::OCCUPIED);
 				FVector SpawnPosition = CurrTile->GetActorLocation();
 				AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
 				GameMode->SetCellSign(PlayerNumber, SpawnPosition);
-				IsMyTurn = false;
+				IsMyTurn = false;*/
 			}
 		}
 	}
