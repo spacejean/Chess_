@@ -2,10 +2,10 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "BasePiece.generated.h"
-
 // Enum class per il colore dei pezzi degli scacchi
 UENUM()
 enum class EPieceColor : uint8
@@ -28,10 +28,6 @@ enum class EPieceType : uint8
 	KING
 };
 
-enum class EPieceStatus : uint8 {
-	Vuota
-};
-
 UCLASS()
 class CHESS_API ABasePiece : public AActor
 {
@@ -40,11 +36,8 @@ class CHESS_API ABasePiece : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABasePiece();
-	// set the player owner 
-	void SetPieceOwner(const int32 POwner);
-
 	// set the player owner and the status of a tile
-	void SetPieceColor( const EPieceColor PieceColor);
+	void SetPieceColor(const EPieceColor PieceColor);
 
 	// set the player owner and the type of a piece
 	void SetPieceType(const EPieceType PieceType);
@@ -56,7 +49,7 @@ public:
 	EPieceType GetPieceType();
 
 	// get the Piece owner
-	int32 GetPieceOwner();
+	int32 GetOwner();
 
 	// set the (x, y) position
 	void SetPiecePosition(const double InX, const double InY);
@@ -66,6 +59,48 @@ public:
 
 	// Set material function
 	void SetMaterial(class UMaterialInterface* Material);
+
+	// reference to a GameField object
+	//UPROPERTY(VisibleAnywhere)
+	//AGameField* mGField;
+
+	virtual void GenerateMoves();
+	virtual void CalculateMoves(bool bDrawAvailableMove);
+	//virtual  TArray<ATile*> CalculateAvailableMoves();
+
+	bool IsOnBoard(const FVector2D& Position) const ;
+
+	
+	
+	
+	
+	//funzione per muovere il pezzo in un altra posizione
+	virtual void Moves();
+	//virtual void DetecSelectableGrids(TArray<ATile*>* SelectableGrids);
+
+
+	
+
+	//UFUNCTION(BlueprintCallable, Category = "Chess")
+	//virtual  void MoveToPosition(const FVector2D& NewPosition);
+
+	// Eliminates piece from the game.
+	UFUNCTION()
+	void Eliminate();
+	
+	TArray<FVector2D> GeneratePawnMoves(const FVector2D& CurrentPosition);
+	TArray<FVector2D> GenerateKingMoves(const FVector2D& CurrentPosition);
+	TArray<FVector2D> GenerateQueenMoves(const FVector2D& CurrentPosition);
+	TArray<FVector2D> GenerateKnightMoves(const FVector2D& CurrentPosition);
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USceneComponent* Scene;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMeshComponent* StaticMeshComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EPieceColor PColor;
@@ -80,16 +115,21 @@ public:
 	// (x, y) position of the tile
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector2D PieceGridPosition;
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	USceneComponent* Scene;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UStaticMeshComponent* StaticMeshComponent;
 
-	
+
+
+	UPROPERTY(EditAnywhere, Category = "Chess")
+	bool bIsWhite;
+
+	// Variable to check if pawn has ever moved.
+	UPROPERTY(EditAnywhere)
+	bool bHasEverMoved;
+
+
+
+
+
 private:
 	UMaterialInterface* CurrentMaterial;
 public:	

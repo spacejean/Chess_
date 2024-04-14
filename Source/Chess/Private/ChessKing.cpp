@@ -3,3 +3,6 @@
 
 #include "ChessKing.h"
 
+void AChessKing::GenerateMoves()
+{
+}

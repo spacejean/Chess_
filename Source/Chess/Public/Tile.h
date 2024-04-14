@@ -1,9 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+//Mettere come attributi degli UMaterialInstance
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "BasePiece.h"
 #include "Tile.generated.h"
 
 UENUM()
@@ -38,7 +40,15 @@ public:
 	FVector2D GetGridPosition();
 
 	// Set material function
-	void SetMaterial(class UMaterialInterface* Material);
+	void SetMaterial(int32 color);
+
+	UMaterialInstance* GetMaterial(int32 Color) const;
+
+	void SetOccupyingChessPiece(ABasePiece* ChessPiece);
+
+	ABasePiece* GetOccupyingChessPiece() const;
+	
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -50,6 +60,24 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* StaticMeshComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* LightTile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* DarkTile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* SelectedTile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* SuggestedTile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* CheckTile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* CurrentMaterial;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	ETileStatus Status;
 
@@ -59,8 +87,14 @@ protected:
 	// (x, y) position of the tile
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector2D TileGridPosition;
+
+	// Il pezzo degli scacchi eventualmente presente sulla casella
+	ABasePiece* OccupyingChessPiece;
+
+
+
 private:
-	UMaterialInterface* CurrentMaterial;
+	
 	//public:	
 	//	// Called every frame
 	//	virtual void Tick(float DeltaTime) override;

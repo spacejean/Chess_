@@ -3,3 +3,6 @@
 
 #include "ChessQueen.h"
 
+void AChessQueen::GenerateMoves()
+{
+}

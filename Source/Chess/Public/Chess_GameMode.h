@@ -62,4 +62,7 @@ public:
 
 	// called at the end of the game turn
 	void TurnNextPlayer();
+
+	// Funzione per ottenere il campo di gioco
+	AGameField* GetGameField() const;
 };

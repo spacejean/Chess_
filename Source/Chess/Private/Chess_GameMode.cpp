@@ -40,7 +40,7 @@ void AChess_GameMode::BeginPlay()
 
 	//float CameraPosX = ((GField->TileSize * (FieldSize + ((FieldSize - 1) * GField->NormalizedCellPadding) - (FieldSize - 1))) / 2) - (GField->TileSize / 2);
 	float CameraPosX = ((GField->TileSize * (FieldSize ) )/ 2) ;
-	FVector CameraPos(CameraPosX, CameraPosX, 900.0f);
+	FVector CameraPos(CameraPosX, CameraPosX, 950.0f);
 	HumanPlayer->SetActorLocationAndRotation(CameraPos, FRotationMatrix::MakeFromX(FVector(0, 0, -1)).Rotator());
 
 	// Human player = 0
@@ -125,4 +125,9 @@ void AChess_GameMode::TurnNextPlayer()
 	MoveCounter += 1;
 	CurrentPlayer = GetNextPlayer(CurrentPlayer);
 	Players[CurrentPlayer]->OnTurn();
+}
+
+AGameField* AChess_GameMode::GetGameField() const
+{
+	return GField;
 }

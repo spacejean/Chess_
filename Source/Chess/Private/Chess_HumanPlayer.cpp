@@ -3,6 +3,8 @@
 
 #include "Chess_HumanPlayer.h"
 #include "GameField.h"
+//aggiunto 12 04
+#include "Tile.h"
 #include "Chess_GameMode.h"
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -13,7 +15,8 @@ AChess_HumanPlayer::AChess_HumanPlayer()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
 	// Set this pawn to be controlled by the lowest-numbered player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	// create a camera component
@@ -70,35 +73,113 @@ void AChess_HumanPlayer::OnLose()
 
 void AChess_HumanPlayer::OnClick()
 {
-	//Structure containing information about one hit of a trace, such as point of impact and surface normal at that point
+	// Struttura che contiene informazioni su un colpo di traccia, come punto di impatto e normale superficiale in quel punto
 	FHitResult Hit = FHitResult(ForceInit);
 	// GetHitResultUnderCursor function sends a ray from the mouse position and gives the corresponding hit results
 	GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursor(ECollisionChannel::ECC_Pawn, true, Hit);
-	if (Hit.bBlockingHit /* && IsMyTurn */ )
-	{	
-		//controlla se l'oggetto colpito è un pezzo degli scacchi
+	//Verifica se il colpo ha colpito qualcosa
+	if (Hit.bBlockingHit && IsMyTurn)
+	{
+		
+			AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+			AGameField* GField = GameMode->GetGameField();
+
+		//Verifico se l'oggetto colpito è di tipo BasePiece
 		if (ABasePiece* CurrPiece = Cast<ABasePiece>(Hit.GetActor()))
 		{
-			//verifico se è il turno del giocatore e il pezzo colpito è del colore giusto 
-			//if (IsMyTurn && HitPiece->GetPieceColor() == CurrentPlayerColor)
-			if (CurrPiece->GetPieceColor() == EPieceColor::WHITE)
+			//salvo la posizione del pezzo colpito
+			FVector2D Location = CurrPiece->GetGridPosition();
+			//stampo la posizione del pezzo colpito(riscordati di cancellare)
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), Location[0], Location[1]));
+			
+			//salvo la posizione della Tile dove ho colpito il pezzo
+			ATile* ClickedTile = GField->GetTileByLocation(Location);
+			
+			//salvo il colore del pezzo colpito
+			EPieceColor PieceColor = CurrPiece->GetPieceColor();
+			
+			//salvo il tipo del pezzo colpito
+			EPieceType PieceType = CurrPiece->GetPieceType();
+
+		
+			
+			if (PieceColor == EPieceColor::WHITE)  
 			{
-
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("es blANCOOOOO"));
-				CurrPiece->GetPieceType();
-				//iMPLEMento movimiento del peon de todas las piezas
+				//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
 				
-				//
-				
-				FVector2D Destination;
+				//memorizza la Tile selezionata e il suo materiale originale
+				GField->SelectedTile = ClickedTile;
+				GField->SelectedTileMaterial = ClickedTile->GetMaterial(4);
+				ClickedTile->SetMaterial(3);
+				CurrPiece->CalculateMoves(true);
+				IsMyTurn = false;
 
-				/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
+				GameMode->TurnNextPlayer();
+				
+				//CurrPiece->CalculateAvailableMoves();
+				// Devo salvarmi il risultato, avrò le mosse valide per quel pezzo
+				// Chiamare SetMaterial per le Tile
+				//}
+			
+			}
+			else if (CurrPiece->GetPieceColor() == EPieceColor::BLACK)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bLACK"));
+				 
+
+			}
+
+			/*if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
 				CurrTile->SetTileStatus(PlayerNumber, ETileStatus::OCCUPIED);
 				FVector SpawnPosition = CurrTile->GetActorLocation();
 				AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
 				GameMode->SetCellSign(PlayerNumber, SpawnPosition);
-				IsMyTurn = false;*/
+				IsMyTurn = false;
 			}
+			*/
+		}
+		
+		//verifico se l'oggeto colpito è di tipo Tile
+		if (ATile* CurrTile = Cast<ATile>(Hit.GetActor()))
+		{
+			
+				if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
+				{
+					//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
+					//ATile* Obj = nullptr;
+					//Obj->SetMaterial(3);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker"));
+					//Obj->GetGridPosition(); 
+					//Obj->SetMaterial(Material);
+
+
+					//CurrPiece->CalculateAvailableMoves();
+					// Devo salvarmi il risultato, avrò le mosse valide per quel pezzo
+					// Chiamare SetMaterial per le Tile
+					//}
+
+				}
+				//else if (CurrPiece->GetPieceColor() == EPieceColor::BLACK)
+				//{
+				//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bLACK"));
+
+
+				//}
+
+			/*if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("clicked"));
+				CurrTile->SetTileStatus(PlayerNumber, ETileStatus::OCCUPIED);
+				FVector SpawnPosition = CurrTile->GetActorLocation();
+				AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+				GameMode->SetCellSign(PlayerNumber, SpawnPosition);
+				IsMyTurn = false;
+			}
+			*/
 		}
 	}
 

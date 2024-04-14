@@ -3,3 +3,6 @@
 
 #include "ChessKnight.h"
 
+void AChessKnight::GenerateMoves()
+{
+}

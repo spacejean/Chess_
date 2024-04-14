@@ -13,5 +13,7 @@ UCLASS()
 class CHESS_API AChessPawn : public ABasePiece
 {
 	GENERATED_BODY()
-	
+	AChessPawn();
+	virtual void GenerateMoves() override;
+	virtual void CalculateMoves(bool bDrawAvailableMove) override;
 };

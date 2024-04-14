@@ -13,5 +13,6 @@ UCLASS()
 class CHESS_API AChessKnight : public ABasePiece
 {
 	GENERATED_BODY()
-	
+	virtual void GenerateMoves() override;
+
 };

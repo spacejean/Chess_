@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "BasePiece.h"
+#include "Tile.h"
+
 #include "ChessRook.generated.h"
 
 /**
@@ -13,5 +15,10 @@ UCLASS()
 class CHESS_API AChessRook : public ABasePiece
 {
 	GENERATED_BODY()
+	virtual void GenerateMoves() override;
+	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
 	
+	
+
 };
+	

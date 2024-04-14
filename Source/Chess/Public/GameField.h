@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Tile.h"
-#include "BasePiece.h"
+
 #include "ChessKing.h"
 #include "ChessQueen.h"
 #include "ChessBishop.h"
@@ -27,6 +27,11 @@ public:
 	UPROPERTY(Transient)
 	TArray<ATile*> TileArray;
 
+	// Tiles 
+	UPROPERTY(Transient)
+	TArray<ATile*> PossibleMoves;
+
+
 	// keeps track of Pieces
 	UPROPERTY(Transient)
 	TArray<ABasePiece*> PieceArray;
@@ -38,6 +43,7 @@ public:
 	//given a position returns a Piece
 	UPROPERTY(Transient)
 	TMap<FVector2D, ABasePiece*> PieceMap;
+
 
 
 	//NONVA
@@ -60,6 +66,14 @@ public:
 	// size of winning line
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 WinSize;
+
+	//Puntatore alla tile selezionata
+	UPROPERTY(BlueprintReadOnly, Category = "Chess")
+	ATile* SelectedTile;
+
+	//Puntatore alla tile selezionata
+	UPROPERTY(BlueprintReadOnly, Category = "Chess")
+	UMaterialInstance* SelectedTileMaterial;
 
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
@@ -159,12 +173,17 @@ public:
 	//return the array of piece pointers
 	TArray<ABasePiece*>& GetPieceArray();
 
+	
 
 	// return a relative position given (x,y) position
 	FVector GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const;
 
 	// return (x,y) position given a relative position
 	FVector2D GetXYPositionByRelativeLocation(const FVector& Location) const;
+
+	//13-04-2024
+	//ritorna un puntatore alla tile data la location
+	ATile* GetTileByLocation(const FVector2D& Location) const;
 
 	// check if a position is a win position
 	bool IsWinPosition(const FVector2D Position) const;
