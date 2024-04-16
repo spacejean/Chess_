@@ -2,6 +2,8 @@
 
 
 #include "ChessBishop.h"
+#include "Tile.h"
+#include "Chess_GameMode.h"
 
 void AChessBishop::GenerateMoves()
 {
@@ -54,3 +56,63 @@ TArray<FVector2D> AChessBishop::GenerateDiagonalMoves(const FVector2D& CurrentPo
 //}
 
 
+void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
+{
+    AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+    // Pulisci la lista dei possibili movimenti
+    GameMode->GField->PossibleMoves.Empty();
+
+    // Ottieni la posizione attuale dell'alfiere
+    FVector2D CurrentPosition = GetGridPosition();
+
+    // Definisci le direzioni di movimento diagonali possibili per l'alfiere
+    TArray<FVector2D> DiagonalDirections = {
+        FVector2D(1, 1), FVector2D(1, -1), FVector2D(-1, 1), FVector2D(-1, -1)
+    };
+
+    // Scansiona ogni direzione diagonale
+    for (const FVector2D& Direction : DiagonalDirections)
+    {
+        // Parti dalla posizione attuale dell'alfiere
+        FVector2D NewPosition = CurrentPosition + Direction;
+
+        // Continua a muoverti nella direzione finché sei sulla scacchiera
+        while (IsOnBoard(NewPosition))
+        {
+            ATile* Tile = GameMode->GField->GetTileByLocation(NewPosition);
+
+            // Se la casella esiste e non è occupata dallo stesso team, aggiungi la posizione ai possibili movimenti dell'alfiere
+            if (Tile)
+            {
+                if (!Tile->GetOccupyingChessPiece())
+                {
+                    // Casella libera
+                    GameMode->GField->PossibleMoves.Add(Tile);
+
+                    // Se richiesto, cambia il materiale della casella
+                    if (bDrawAvailableMoves)
+                    {
+                        Tile->SetMaterial(2);
+                    }
+                }
+                else if (Tile->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
+                {
+                    // Casella occupata da un pezzo avversario
+                    GameMode->GField->PossibleMoves.Add(Tile);
+
+                    // Se richiesto, cambia il materiale della casella
+                    if (bDrawAvailableMoves)
+                    {
+                        Tile->SetMaterial(3);
+                    }
+
+                    //Non è possibile muoversi oltre quella casella
+                    break;
+                }
+            }
+
+            // Muoviti ulteriormente nella direzione diagonale
+            NewPosition += Direction;
+        }
+    }
+}

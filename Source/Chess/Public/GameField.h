@@ -77,9 +77,11 @@ public:
 
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATile> TileClass0;
+	
+	// TSubclassOf template class that provides UClass type safety
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATile> TileClass;
-	
-	
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABasePiece> PieceClass;

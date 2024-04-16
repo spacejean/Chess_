@@ -34,7 +34,7 @@ void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
             ATile* Tile = GameMode->GField->GetTileByLocation(NewPosition);
 
             // Se non c'è una casella o se la casella è vuota, aggiungi la posizione ai possibili movimenti
-            if (!Tile || !Tile->GetOccupyingChessPiece())
+            if (Tile && !Tile->GetOccupyingChessPiece())
             {
                 GameMode->GField->PossibleMoves.Add(Tile);
 

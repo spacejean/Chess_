@@ -14,5 +14,5 @@ class CHESS_API AChessKnight : public ABasePiece
 {
 	GENERATED_BODY()
 	virtual void GenerateMoves() override;
-
+	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
 };

@@ -59,6 +59,11 @@ void AGameField::ResetField()
 
 void AGameField::GenerateField()
 {
+	FVector Location0 = AGameField::GetRelativeLocationByXYPosition(0, 0);
+
+	ATile* Obj1 = GetWorld()->SpawnActor<ATile>(TileClass0, Location0, FRotator::ZeroRotator);
+	const float TileScale1 = TileSize / 100;
+	Obj1->SetActorScale3D(FVector(TileScale1, TileScale1, 0.15));
 	for (int32 x = 0; x < Size; x++)
 	{
 		for (int32 y = 0; y < Size; y++)
@@ -255,6 +260,45 @@ void AGameField::GeneratePieces()
 
 
 			}
+
+
+			//prueba nomas
+			else if (x == 2)
+			{
+				if (y == 7) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WRookClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetPiecePosition(x, y);
+					Obj->SetPieceColor(EPieceColor::WHITE);
+					Obj->SetPieceType(EPieceType::ROOK);
+					FVector2D PieceLocation = Obj->GetGridPosition();
+					ATile* Tile = GetTileByLocation(PieceLocation);
+					Tile->SetOccupyingChessPiece(Obj);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+				if (y == 5) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BRookClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetPiecePosition(x, y);
+					Obj->SetPieceColor(EPieceColor::BLACK);
+					Obj->SetPieceType(EPieceType::ROOK);
+					FVector2D PieceLocation = Obj->GetGridPosition();
+					ATile* Tile = GetTileByLocation(PieceLocation);
+					Tile->SetOccupyingChessPiece(Obj);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+			}
+
 			else if (x == 7)
 			{
 				if (y == 0 || y == 7) {
