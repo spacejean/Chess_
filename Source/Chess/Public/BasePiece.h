@@ -66,9 +66,14 @@ public:
 
 	virtual void GenerateMoves();
 	virtual void CalculateMoves(bool bDrawAvailableMove);
+
+	//definisci le direzione di movimento possibili per i pezzi
+	virtual TArray<FVector2D> GetMovementDirections() const;
+	
+		
 	//virtual  TArray<ATile*> CalculateAvailableMoves();
 
-	bool IsOnBoard(const FVector2D& Position) const ;
+	bool IsValidBoardPosition(const FVector2D& Position) const ;
 
 	
 	

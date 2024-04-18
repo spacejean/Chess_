@@ -81,7 +81,12 @@ void ABasePiece::CalculateMoves(bool bDrawAvailableMove)
 {
 }
 
-bool ABasePiece::IsOnBoard(const FVector2D& Position) const
+TArray<FVector2D> ABasePiece::GetMovementDirections() const
+{
+	return TArray<FVector2D>();
+}
+
+bool ABasePiece::IsValidBoardPosition(const FVector2D& Position) const
 {
 	return Position.X >= 0 && Position.X < 8 && Position.Y >= 0 && Position.Y < 8;
 }

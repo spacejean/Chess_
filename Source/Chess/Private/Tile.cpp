@@ -126,9 +126,9 @@ UMaterialInstance* ATile::GetMaterial(int32 Color) const
 		return Material;	
 }
 
-void ATile::SetOccupyingChessPiece(ABasePiece* ChessPiece)
+void ATile::SetOccupyingChessPiece(ABasePiece* BasePiece)
 {
-	OccupyingChessPiece = ChessPiece;
+	OccupyingChessPiece = BasePiece;
 }
 
 ABasePiece* ATile::GetOccupyingChessPiece() const

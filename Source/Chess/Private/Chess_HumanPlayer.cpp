@@ -82,7 +82,7 @@ void AChess_HumanPlayer::OnClick()
 	{
 		
 			AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
-			AGameField* GField = GameMode->GetGameField();
+			AGameField* GField = GameMode->GetGameField(); 
 
 		//Verifico se l'oggetto colpito è di tipo BasePiece
 		if (ABasePiece* CurrPiece = Cast<ABasePiece>(Hit.GetActor()))
@@ -93,7 +93,7 @@ void AChess_HumanPlayer::OnClick()
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), Location[0], Location[1]));
 			
 			//salvo la posizione della Tile dove ho colpito il pezzo
-			ATile* ClickedTile = GField->GetTileByLocation(Location);
+			ATile* CTile = GField->GetTileByLocation(Location);
 			
 			//salvo il colore del pezzo colpito
 			EPieceColor PieceColor = CurrPiece->GetPieceColor();
@@ -101,7 +101,10 @@ void AChess_HumanPlayer::OnClick()
 			//salvo il tipo del pezzo colpito
 			EPieceType PieceType = CurrPiece->GetPieceType();
 
-		
+			if (!CTile) {
+				FString Message = FString::Printf(TEXT("Error: ChessPiece not on Tile"));
+			}
+
 			
 			if (PieceColor == EPieceColor::WHITE)  
 			{
@@ -109,10 +112,12 @@ void AChess_HumanPlayer::OnClick()
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
 				
 				//memorizza la Tile selezionata e il suo materiale originale
-				GField->SelectedTile = ClickedTile;
-				GField->SelectedTileMaterial = ClickedTile->GetMaterial(4);
-				ClickedTile->SetMaterial(3);
+				GField->SelectedTile = CTile;
+				GField->SelectedTileMaterial = CTile->GetMaterial(4);
+				CTile->SetMaterial(3);
+				//CurrPiece->CalculateMoves(true);
 				CurrPiece->CalculateMoves(true);
+
 				IsMyTurn = false;
 
 				GameMode->TurnNextPlayer();
@@ -182,7 +187,10 @@ void AChess_HumanPlayer::OnClick()
 			*/
 		}
 	}
-
-
-
 }
+
+
+
+
+
+

@@ -44,7 +44,7 @@ public:
 
 	UMaterialInstance* GetMaterial(int32 Color) const;
 
-	void SetOccupyingChessPiece(ABasePiece* ChessPiece);
+	void SetOccupyingChessPiece(ABasePiece* BasePiece);
 
 	ABasePiece* GetOccupyingChessPiece() const;
 	

@@ -34,7 +34,7 @@ void AChessKnight::CalculateMoves(bool bDrawAvailableMoves)
         FVector2D NewPosition = CurrentPosition + Direction;
 
         // Verifica se la nuova posizione è all'interno della scacchiera
-        if (IsOnBoard(NewPosition))
+        if (IsValidBoardPosition(NewPosition))
         {
             ATile* Tile = GameMode->GField->GetTileByLocation(NewPosition);
 

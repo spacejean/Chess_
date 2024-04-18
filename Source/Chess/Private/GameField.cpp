@@ -59,11 +59,11 @@ void AGameField::ResetField()
 
 void AGameField::GenerateField()
 {
-	FVector Location0 = AGameField::GetRelativeLocationByXYPosition(0, 0);
+	//FVector Location0 = AGameField::GetRelativeLocationByXYPosition(0, 0);
 
-	ATile* Obj1 = GetWorld()->SpawnActor<ATile>(TileClass0, Location0, FRotator::ZeroRotator);
-	const float TileScale1 = TileSize / 100;
-	Obj1->SetActorScale3D(FVector(TileScale1, TileScale1, 0.15));
+	//ATile* Obj1 = GetWorld()->SpawnActor<ATile>(TileClass0, Location0, FRotator::ZeroRotator);
+	//const float TileScale1 = TileSize / 100;
+	//Obj1->SetActorScale3D(FVector(TileScale1, TileScale1, 0.15));
 	for (int32 x = 0; x < Size; x++)
 	{
 		for (int32 y = 0; y < Size; y++)
@@ -141,7 +141,7 @@ void AGameField::GeneratePieces()
 			else if (x == 6) 
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-					AChessPawn* Obj = GetWorld()->SpawnActor<AChessPawn>(BPawnClass, Location, FRotator::ZeroRotator);
+					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BPawnClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
@@ -151,7 +151,7 @@ void AGameField::GeneratePieces()
 					Obj->SetPieceType(EPieceType::PAWN);
 					FVector2D PieceLocation = Obj->GetGridPosition();
 					ATile* Tile = GetTileByLocation(PieceLocation);
-					Tile->SetOccupyingChessPiece(Obj);
+					Tile->SetOccupyingChessPiece(Obj); 
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
@@ -299,6 +299,42 @@ void AGameField::GeneratePieces()
 				}
 			}
 
+			else if (x == 4)
+			{
+				if (y == 3) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WQueenClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetPiecePosition(x, y);
+					Obj->SetPieceColor(EPieceColor::WHITE);
+					Obj->SetPieceType(EPieceType::ROOK);
+					FVector2D PieceLocation = Obj->GetGridPosition();
+					ATile* Tile = GetTileByLocation(PieceLocation);
+					Tile->SetOccupyingChessPiece(Obj);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+				if (y == 4) {
+					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WBishopClass, Location, FRotator::ZeroRotator);
+					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
+					//Obj->SetMaterial(Material);
+					const float TileScale = TileSize / 100;
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetPiecePosition(x, y);
+					Obj->SetPieceColor(EPieceColor::WHITE);
+					Obj->SetPieceType(EPieceType::BISHOP);
+					FVector2D PieceLocation = Obj->GetGridPosition();
+					ATile* Tile = GetTileByLocation(PieceLocation);
+					Tile->SetOccupyingChessPiece(Obj);
+					PieceArray.Add(Obj);
+					PieceMap.Add(FVector2D(x, y), Obj);
+				}
+			}
+			//fine prova
 			else if (x == 7)
 			{
 				if (y == 0 || y == 7) {

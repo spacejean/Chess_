@@ -29,7 +29,7 @@ void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
         FVector2D NewPosition = CurrentPosition + Direction;
 
         // Continua a muoverti nella direzione finché sei sulla scacchiera
-        while (IsOnBoard(NewPosition))
+        while (IsValidBoardPosition(NewPosition))
         {
             ATile* Tile = GameMode->GField->GetTileByLocation(NewPosition);
 
