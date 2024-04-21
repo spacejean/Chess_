@@ -61,6 +61,8 @@ void AChess_RandomPlayer::OnTurn()
 				GameMode->SetCellSign(PlayerNumber, Location);
 
 			}
+			//aggiunto
+			GameMode->TurnNextPlayer();
 		}, 3, false);
 }
 

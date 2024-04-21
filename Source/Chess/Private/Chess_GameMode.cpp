@@ -106,7 +106,7 @@ void AChess_GameMode::SetCellSign(const int32 PlayerNumber, const FVector& Spawn
 	}
 	else
 	{
-		TurnNextPlayer();
+		//TurnNextPlayer();
 	}
 }
 
@@ -130,4 +130,21 @@ void AChess_GameMode::TurnNextPlayer()
 AGameField* AChess_GameMode::GetGameField() const
 {
 	return GField;
+}
+
+void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
+{
+	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+	for (auto* elem : GameMode->GField->PossibleMoves) {
+
+
+		if (tile->GetGridPosition() == elem->GetGridPosition()) {
+			int32 x = tile->GetGridPosition()[0];
+			int32 y = tile->GetGridPosition()[1];
+			FVector position = FVector(x * 120, y * 120, 0.2);
+			piece->SetActorLocation(position);
+			piece->SetPiecePosition(x,y);
+		}
+
+	}
 }

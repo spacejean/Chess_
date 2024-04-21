@@ -91,6 +91,7 @@ bool ABasePiece::IsValidBoardPosition(const FVector2D& Position) const
 	return Position.X >= 0 && Position.X < 8 && Position.Y >= 0 && Position.Y < 8;
 }
 
+
 void ABasePiece::Moves()
 {
 	FVector NewLocation = GetActorLocation()*2;

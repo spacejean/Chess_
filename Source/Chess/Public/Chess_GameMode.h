@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Chess_PlayerInterface.h"
 #include "GameField.h"
+#include "BasePiece.h"
 #include "GameFramework/GameModeBase.h"
 #include "Chess_GameMode.generated.h"
 
@@ -65,4 +66,6 @@ public:
 
 	// Funzione per ottenere il campo di gioco
 	AGameField* GetGameField() const;
+
+	void movepiece(ATile* tile, ABasePiece* piece);
 };

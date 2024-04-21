@@ -59,11 +59,11 @@ void AGameField::ResetField()
 
 void AGameField::GenerateField()
 {
-	//FVector Location0 = AGameField::GetRelativeLocationByXYPosition(0, 0);
+	FVector Location0 = AGameField::GetRelativeLocationByXYPosition(0, 0);
 
-	//ATile* Obj1 = GetWorld()->SpawnActor<ATile>(TileClass0, Location0, FRotator::ZeroRotator);
-	//const float TileScale1 = TileSize / 100;
-	//Obj1->SetActorScale3D(FVector(TileScale1, TileScale1, 0.15));
+	ATile* Obj1 = GetWorld()->SpawnActor<ATile>(TileClass0, Location0, FRotator::ZeroRotator);
+	const float TileScale1 = TileSize / 100;
+	Obj1->SetActorScale3D(FVector(TileScale1, TileScale1, 0.15));
 	for (int32 x = 0; x < Size; x++)
 	{
 		for (int32 y = 0; y < Size; y++)
@@ -439,6 +439,11 @@ TArray<ATile*>& AGameField::GetTileArray()
 	return TileArray;
 }
 
+TArray<ATile*>& AGameField::GetPossibleMovesTileArray()
+{
+	return PossibleMoves;
+}
+
 TArray<ABasePiece*>& AGameField::GetPieceArray()
 {
 	return PieceArray;
@@ -596,6 +601,14 @@ bool AGameField::AllEqual(const TArray<int32>& Array) const
 
 	return true;
 }
+
+void AGameField::ResetPossibleMoves()
+{
+
+	PossibleMoves.Empty();
+}
+
+
 
 // Called every frame
 //void AGameField::Tick(float DeltaTime)

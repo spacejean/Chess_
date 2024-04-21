@@ -76,7 +76,7 @@ public:
 	bool IsValidBoardPosition(const FVector2D& Position) const ;
 
 	
-	
+	//virtual void movepiece(ATile* tile);
 	
 	
 	//funzione per muovere il pezzo in un altra posizione

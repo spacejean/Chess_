@@ -160,6 +160,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetField();
 
+	//rimuovi le possibili mosse
+	void ResetPossibleMoves();
+
 	// generate an empty game field
 	void GenerateField();
 
@@ -171,6 +174,9 @@ public:
 
 	// return the array of tile pointers
 	TArray<ATile*>& GetTileArray();
+
+	// return the array of possible moves tile pointers
+	TArray<ATile*>& GetPossibleMovesTileArray();
 
 	//return the array of piece pointers
 	TArray<ABasePiece*>& GetPieceArray();

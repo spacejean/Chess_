@@ -47,10 +47,10 @@ void AChessKnight::CalculateMoves(bool bDrawAvailableMoves)
                     GameMode->GField->PossibleMoves.Add(Tile);
 
                     // Se richiesto, cambia il materiale della casella
-                    if (bDrawAvailableMoves)
-                    {
-                        Tile->SetMaterial(2);
-                    }
+                    //if (bDrawAvailableMoves)
+                    //{
+                    //    Tile->SetMaterial(2);
+                    //}
                 }
                 else if (Tile->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
                 {
@@ -58,12 +58,70 @@ void AChessKnight::CalculateMoves(bool bDrawAvailableMoves)
                     GameMode->GField->PossibleMoves.Add(Tile);
 
                     // Se richiesto, cambia il materiale della casella
-                    if (bDrawAvailableMoves)
-                    {
-                        Tile->SetMaterial(3);
-                    }
+                   // if (bDrawAvailableMoves)
+                   // {
+                   //     Tile->SetMaterial(3);
+                   // }
                 }
             }
         }
     }
+    if (counter%2!=0)
+    {
+        for (auto& position : GameMode->GField->PossibleMoves) {
+
+
+            position->SetMaterial(4);
+        }
+        GameMode->GField->GetTileByLocation(this->GetGridPosition())->SetMaterial(4);
+    }
+    else
+    {
+        for (auto& position : GameMode->GField->PossibleMoves) {
+
+            auto* occupyingPiece = position->GetOccupyingChessPiece();
+            //ATile* Tile = GameMode->GField->GetTileByLocation(position);
+          if (occupyingPiece &&occupyingPiece->GetPieceColor() != this->GetPieceColor())
+            {
+            position->SetMaterial(3);
+            
+            }
+          else
+            {
+                position->SetMaterial(2);
+            }
+        }
+            //ATile* Tile = GameMode->GField->GetTileByLocation(position);
+         
+        //if (position->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
+         //   {
+         //   position->SetMaterial(2);
+            
+          //  }
+            //else
+            //{
+              //  position->SetMaterial(2);
+            //}
+        }
+
+    
+    counter++;
 }
+
+/*
+void AChessKnight::movepiece(ATile* tile) 
+{
+    AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+    for (auto* elem : GameMode->GField->PossibleMoves) {
+
+        
+        if (tile->GetGridPosition() == elem->GetGridPosition()) {
+            int32 x = tile->GetGridPosition()[0];
+            int32 y = tile->GetGridPosition()[1];
+            FVector posicion = FVector(x * 120, y * 120, 0.2);
+            this->SetActorLocation(posicion);
+        }
+
+    }
+}
+*/

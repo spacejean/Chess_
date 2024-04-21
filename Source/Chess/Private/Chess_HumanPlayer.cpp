@@ -73,7 +73,7 @@ void AChess_HumanPlayer::OnLose()
 
 void AChess_HumanPlayer::OnClick()
 {
-	// Struttura che contiene informazioni su un colpo di traccia, come punto di impatto e normale superficiale in quel punto
+	// Struttura che contiene informazioni su un colpo di traccia, come punto di impatto e normale superficie in quel punto
 	FHitResult Hit = FHitResult(ForceInit);
 	// GetHitResultUnderCursor function sends a ray from the mouse position and gives the corresponding hit results
 	GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursor(ECollisionChannel::ECC_Pawn, true, Hit);
@@ -83,12 +83,15 @@ void AChess_HumanPlayer::OnClick()
 		
 			AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
 			AGameField* GField = GameMode->GetGameField(); 
+			
+			if (Hit.GetActor()->IsA<ABasePiece>()) {
 
+		}
 		//Verifico se l'oggetto colpito è di tipo BasePiece
-		if (ABasePiece* CurrPiece = Cast<ABasePiece>(Hit.GetActor()))
+		if (ABasePiece* ClickedBasePiece = Cast<ABasePiece>(Hit.GetActor()))
 		{
 			//salvo la posizione del pezzo colpito
-			FVector2D Location = CurrPiece->GetGridPosition();
+			FVector2D Location = ClickedBasePiece->GetGridPosition();
 			//stampo la posizione del pezzo colpito(riscordati di cancellare)
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), Location[0], Location[1]));
 			
@@ -96,31 +99,32 @@ void AChess_HumanPlayer::OnClick()
 			ATile* CTile = GField->GetTileByLocation(Location);
 			
 			//salvo il colore del pezzo colpito
-			EPieceColor PieceColor = CurrPiece->GetPieceColor();
+			EPieceColor PieceColor = ClickedBasePiece->GetPieceColor();
 			
 			//salvo il tipo del pezzo colpito
-			EPieceType PieceType = CurrPiece->GetPieceType();
+			EPieceType PieceType = ClickedBasePiece->GetPieceType();
 
 			if (!CTile) {
 				FString Message = FString::Printf(TEXT("Error: ChessPiece not on Tile"));
 			}
 
 			
+
 			if (PieceColor == EPieceColor::WHITE)  
 			{
 				//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
 				
 				//memorizza la Tile selezionata e il suo materiale originale
-				GField->SelectedTile = CTile;
-				GField->SelectedTileMaterial = CTile->GetMaterial(4);
-				CTile->SetMaterial(3);
+				//GField->SelectedTile = CTile;
+				//GField->SelectedTileMaterial = CTile->GetMaterial(4);
+				CTile->SetMaterial(2);
 				//CurrPiece->CalculateMoves(true);
-				CurrPiece->CalculateMoves(true);
+				ClickedBasePiece->CalculateMoves(true);
 
-				IsMyTurn = false;
+				//IsMyTurn = false;
 
-				GameMode->TurnNextPlayer();
+				//GameMode->TurnNextPlayer();
 				
 				//CurrPiece->CalculateAvailableMoves();
 				// Devo salvarmi il risultato, avrò le mosse valide per quel pezzo
@@ -128,12 +132,7 @@ void AChess_HumanPlayer::OnClick()
 				//}
 			
 			}
-			else if (CurrPiece->GetPieceColor() == EPieceColor::BLACK)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bLACK"));
-				 
-
-			}
+			
 
 			/*if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
 			{
@@ -145,16 +144,19 @@ void AChess_HumanPlayer::OnClick()
 				IsMyTurn = false;
 			}
 			*/
+			memPiece = ClickedBasePiece;
 		}
 		
 		//verifico se l'oggeto colpito è di tipo Tile
-		if (ATile* CurrTile = Cast<ATile>(Hit.GetActor()))
+		if (ATile* ClickedTile = Cast<ATile>(Hit.GetActor()))
 		{
 			
-				if (CurrTile->GetTileStatus() == ETileStatus::EMPTY)
+				if (ClickedTile->GetTileStatus() == ETileStatus::EMPTY)
 				{
 					//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
+					GameMode->movepiece(ClickedTile, memPiece);
 					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
+					GField->ResetPossibleMoves();
 					//ATile* Obj = nullptr;
 					//Obj->SetMaterial(3);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker"));
