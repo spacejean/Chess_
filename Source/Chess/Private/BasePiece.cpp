@@ -119,7 +119,8 @@ TArray<ATile*> ABasePiece::CalculateAvailableMoves()
 
 void ABasePiece::Eliminate()
 {
-	this->Destroy();
+	//this->Destroy();
+	Destroy();
 }
 
 TArray<FVector2D> ABasePiece::GeneratePawnMoves(const FVector2D& CurrentPosition)

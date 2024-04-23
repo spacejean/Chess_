@@ -68,4 +68,5 @@ public:
 	AGameField* GetGameField() const;
 
 	void movepiece(ATile* tile, ABasePiece* piece);
+	void movepiece2(FVector2D fpos, ABasePiece* PieceB, ABasePiece* MyPiece);
 };

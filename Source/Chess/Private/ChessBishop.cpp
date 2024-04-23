@@ -55,13 +55,15 @@ TArray<FVector2D> AChessBishop::GenerateDiagonalMoves(const FVector2D& CurrentPo
 //	return GenerateDiagonalMoves(PieceGridPosition);
 //}
 
-/*
+
 
 void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
 {
+    TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
     // Pulisci la lista dei possibili movimenti
-    GameMode->GField->PossibleMoves.Empty();
+    GameMode->GField->ResetTilesColor();
+    GameMode->GField->PossibleMoves = temp;
 
     // Ottieni la posizione attuale dell'alfiere
     FVector2D CurrentPosition = GetGridPosition();
@@ -110,6 +112,10 @@ void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
                     //Non è possibile muoversi oltre quella casella
                     break;
                 }
+                else
+                {
+                    break;
+                }
             }
 
             // Muoviti ulteriormente nella direzione diagonale
@@ -117,7 +123,7 @@ void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
         }
     }
 }
-*/
+
 
 
 
@@ -164,6 +170,8 @@ bool AChessBishop::IsTileEmpty(ATile* Tile) const
     return !OccupyingPiece;
 }
 
+
+/*
 void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
 {
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
@@ -231,3 +239,6 @@ void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
         }
     }
 }
+
+
+*/

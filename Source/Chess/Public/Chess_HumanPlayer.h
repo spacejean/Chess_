@@ -24,6 +24,7 @@ public:
 	// game instance reference
 	UChess_GameInstance* GameInstance;
 	ABasePiece* memPiece;
+	UMaterialInstance* RedMaterial;
 
 protected:
 	// Called when the game starts or when spawned

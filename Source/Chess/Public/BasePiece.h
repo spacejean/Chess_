@@ -117,12 +117,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 PieceOwner;
 
-	// (x, y) position of the tile
+	// (x, y) position of the piece
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector2D PieceGridPosition;
-
-
-
 
 	UPROPERTY(EditAnywhere, Category = "Chess")
 	bool bIsWhite;

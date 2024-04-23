@@ -27,7 +27,7 @@ public:
 	UPROPERTY(Transient)
 	TArray<ATile*> TileArray;
 
-	// Tiles 
+	// Array di tile delle possibile mosse
 	UPROPERTY(Transient)
 	TArray<ATile*> PossibleMoves;
 
@@ -123,20 +123,7 @@ public:
 	TSubclassOf<ABasePiece> BPawnClass;
 
 
-	/*
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABasePiece> PieceKnightClass;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABasePiece> PieceKingClass;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABasePiece> PieceQueenClass;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABasePiece> PiecePawnClass;
-
-	*/
+	
 	//NONVA
 	// tile padding dimension
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -168,6 +155,11 @@ public:
 
 	//generate pieces
 	void GeneratePieces();
+
+
+	//rigenera il colore delle Tile
+	void ResetTilesColor();
+
 
 	// return a (x,y) position given a hit (click) on a field tile
 	FVector2D GetPosition(const FHitResult& Hit);

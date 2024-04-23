@@ -33,6 +33,7 @@ void AChess_RandomPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 }
 
+/*
 void AChess_RandomPlayer::OnTurn()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("AI (Random) Turn"));
@@ -65,6 +66,22 @@ void AChess_RandomPlayer::OnTurn()
 			GameMode->TurnNextPlayer();
 		}, 3, false);
 }
+*/
+
+void AChess_RandomPlayer::OnTurn()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("AI (Random) Turn"));
+	GameInstance->SetTurnMessage(TEXT("AI (Random) Turn"));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("ha mosso la random player "));
+	AChess_GameMode* GameMode = (AChess_GameMode*)(GetWorld()->GetAuthGameMode());
+	GameMode->TurnNextPlayer();
+}
+
+//Creazione Random Player
+//Devo creare un array di pezzi neri
+//Se l'array dei pezzi è di tipo nero
+//scelgo una fra quelli, e eseguo le mosse disponibili
+//e mi posiziono in una nuova tile dove non è occupata
 
 void AChess_RandomPlayer::OnWin()
 {

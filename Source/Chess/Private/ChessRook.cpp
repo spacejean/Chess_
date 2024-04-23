@@ -12,9 +12,11 @@ void AChessRook::GenerateMoves()
 
 void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
 {
+    TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
     // Pulisci la lista dei possibili movimenti
-    GameMode->GField->PossibleMoves.Empty();
+    GameMode->GField->ResetTilesColor();
+    GameMode->GField->PossibleMoves = temp;
 
     // Ottieni la posizione attuale della torre
     FVector2D CurrentPosition = GetGridPosition();

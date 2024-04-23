@@ -11,7 +11,11 @@ void AChessQueen::GenerateMoves()
 
 void AChessQueen::CalculateMoves(bool bDrawAvailableMoves)
 {
+    TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+    // Pulisci la lista dei possibili movimenti
+    GameMode->GField->ResetTilesColor();
+    GameMode->GField->PossibleMoves = temp;
 
     // Ottieni la posizione attuale della regina
     FVector2D CurrentPosition = GetGridPosition();

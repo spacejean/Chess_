@@ -12,9 +12,12 @@ void AChessKnight::GenerateMoves()
 
 void AChessKnight::CalculateMoves(bool bDrawAvailableMoves)
 {
+    TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
     // Pulisci la lista dei possibili movimenti
-    GameMode->GField->PossibleMoves.Empty();
+    GameMode->GField->ResetTilesColor();
+    GameMode->GField->PossibleMoves=temp;
+
 
     // Ottieni la posizione attuale del cavallo
     FVector2D CurrentPosition = GetGridPosition();
@@ -66,21 +69,28 @@ void AChessKnight::CalculateMoves(bool bDrawAvailableMoves)
             }
         }
     }
-    if (counter%2!=0)
-    {
-        for (auto& position : GameMode->GField->PossibleMoves) {
+
+  
 
 
-            position->SetMaterial(4);
-        }
-        GameMode->GField->GetTileByLocation(this->GetGridPosition())->SetMaterial(4);
-    }
-    else
-    {
+    
+
+
+   // if (counter%2!=0)
+    //{
+    //    for (auto& position : GameMode->GField->PossibleMoves) {
+
+
+    //        position->SetMaterial(4);
+    //    }
+       // GameMode->GField->GetTileByLocation(this->GetGridPosition())->SetMaterial(4);
+    //}
+    //else
+    //{
         for (auto& position : GameMode->GField->PossibleMoves) {
 
             auto* occupyingPiece = position->GetOccupyingChessPiece();
-            //ATile* Tile = GameMode->GField->GetTileByLocation(position);
+           
           if (occupyingPiece &&occupyingPiece->GetPieceColor() != this->GetPieceColor())
             {
             position->SetMaterial(3);
@@ -91,21 +101,12 @@ void AChessKnight::CalculateMoves(bool bDrawAvailableMoves)
                 position->SetMaterial(2);
             }
         }
-            //ATile* Tile = GameMode->GField->GetTileByLocation(position);
          
-        //if (position->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
-         //   {
-         //   position->SetMaterial(2);
-            
-          //  }
-            //else
-            //{
-              //  position->SetMaterial(2);
-            //}
-        }
+        
+     //   }
 
     
-    counter++;
+   // counter++;
 }
 
 /*

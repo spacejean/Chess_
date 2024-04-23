@@ -144,7 +144,50 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 			FVector position = FVector(x * 120, y * 120, 0.2);
 			piece->SetActorLocation(position);
 			piece->SetPiecePosition(x,y);
+			GField->SelectedTile->SetOccupyingChessPiece(nullptr);
+			tile->SetOccupyingChessPiece(piece);
+			
 		}
+
+	}
+
+	GField->ResetTilesColor();
+	TurnNextPlayer();
+
+}
+
+void AChess_GameMode::movepiece2(FVector2D fpos, ABasePiece* PieceB, ABasePiece* MyPiece)
+{
+	bool tempr = false;
+	for (auto* elem : GField->PossibleMoves)
+	{
+		if (PieceB->GetGridPosition() == elem->GetGridPosition())
+		{
+			tempr = true;
+		}
+	}
+	if (tempr)
+	{
+		if (GField->PieceMap.Contains(PieceB->GetGridPosition()))
+		{
+		MyPiece->SetActorLocation(PieceB->GetActorLocation());
+		int32 x = PieceB->GetGridPosition()[0];
+		int32 y = PieceB->GetGridPosition()[1];
+		
+		PieceB->Destroy();
+		
+		GField->PieceMap.Remove(PieceB->GetGridPosition());
+		MyPiece->SetPiecePosition(x, y);
+		GField->PieceMap.Add(MyPiece->GetGridPosition(), MyPiece);
+		GField->SelectedTile->SetOccupyingChessPiece(nullptr);
+		ATile* Tile = GField->GetTileByLocation(FVector2D(x, y));
+		Tile->SetOccupyingChessPiece(MyPiece);
+		GField->PieceMap.Shrink();
+		GField->PieceMap.Compact();
+
+		}
+		GField->ResetTilesColor();
+		TurnNextPlayer();
 
 	}
 }

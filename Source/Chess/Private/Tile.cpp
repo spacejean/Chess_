@@ -86,14 +86,20 @@ void ATile::SetMaterial(int32 Color)
 	else if (Color == 2)
 	{
 		StaticMeshComponent->SetMaterial(0, SelectedTile);
+		
 	}
 	else if (Color == 3)
 	{
 		StaticMeshComponent->SetMaterial(0, SuggestedTile);
+		//CurrentMaterial = SuggestedTile;
 	}
 	else if (Color == 4)
 	{
 		StaticMeshComponent->SetMaterial(0, CurrentMaterial);
+	}
+	else if (Color == 5)
+	{
+		StaticMeshComponent->SetMaterial(0, KillTile);
 	}
 }
 
@@ -118,6 +124,9 @@ UMaterialInstance* ATile::GetMaterial(int32 Color) const
 		case 4:
 			Material = CurrentMaterial;
 			break;
+		case 5:
+			Material = KillTile;
+			break;
 		default:
 			// Se il colore non è valido, restituisci nullptr o un'altra azione appropriata
 			
@@ -134,6 +143,7 @@ void ATile::SetOccupyingChessPiece(ABasePiece* BasePiece)
 ABasePiece* ATile::GetOccupyingChessPiece() const
 {
 	return OccupyingChessPiece;
+	
 }
 
 // Called every frame

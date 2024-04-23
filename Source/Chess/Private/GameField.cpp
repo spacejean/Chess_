@@ -98,7 +98,7 @@ void AGameField::GenerateField()
 				TileMap.Add(FVector2D(x, y), Obj);
 
 			}
-
+			
 			/*
 			FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 			ATile* Obj = GetWorld()->SpawnActor<ATile>(TileClass, Location, FRotator::ZeroRotator);
@@ -128,7 +128,7 @@ void AGameField::GeneratePieces()
 				//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 				//Obj->SetMaterial(Material);
 				const float TileScale = TileSize / 100;
-				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 				Obj->SetPiecePosition(x, y);
 				Obj->SetPieceColor(EPieceColor::WHITE);
 				Obj->SetPieceType(EPieceType::PAWN);
@@ -145,7 +145,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::PAWN);
@@ -155,6 +155,7 @@ void AGameField::GeneratePieces()
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
+
 			else if (x == 0)
 			{
 				if (y == 0) {
@@ -163,7 +164,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::ROOK);
@@ -180,7 +181,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::ROOK);
@@ -197,7 +198,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::KNIGHT);
@@ -213,7 +214,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::BISHOP);
@@ -230,7 +231,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::QUEEN);
@@ -247,7 +248,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::KING);
@@ -263,17 +264,18 @@ void AGameField::GeneratePieces()
 
 
 			//prueba nomas
+			/*
 			else if (x == 2)
 			{
 				if (y == 7) {
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WRookClass, Location, FRotator::ZeroRotator);
+					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BRookClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
 					Obj->SetPiecePosition(x, y);
-					Obj->SetPieceColor(EPieceColor::WHITE);
+					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::ROOK);
 					FVector2D PieceLocation = Obj->GetGridPosition();
 					ATile* Tile = GetTileByLocation(PieceLocation);
@@ -298,6 +300,7 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 			}
+			*/
 
 			else if (x == 4)
 			{
@@ -307,7 +310,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::ROOK);
@@ -323,7 +326,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::WHITE);
 					Obj->SetPieceType(EPieceType::BISHOP);
@@ -343,7 +346,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::ROOK);
@@ -360,7 +363,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::KNIGHT);
@@ -376,7 +379,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::BISHOP);
@@ -393,7 +396,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::QUEEN);
@@ -410,7 +413,7 @@ void AGameField::GeneratePieces()
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
 					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
+					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
 					Obj->SetPieceColor(EPieceColor::BLACK);
 					Obj->SetPieceType(EPieceType::KING);
@@ -427,6 +430,18 @@ void AGameField::GeneratePieces()
 	}
 
 	
+}
+
+void AGameField::ResetTilesColor()
+{
+	for (auto& position : PossibleMoves) {
+
+
+		position->SetMaterial(4);
+	}
+	//SelectedTile->SetMaterial(4);
+	//GetTileByLocation(m->GetGridPosition())->SetMaterial(4);
+	ResetPossibleMoves();
 }
 
 FVector2D AGameField::GetPosition(const FHitResult& Hit)
