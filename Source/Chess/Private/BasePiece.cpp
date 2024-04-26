@@ -53,7 +53,7 @@ int32 ABasePiece::GetOwner()
 	return PieceOwner;
 }
 
-void ABasePiece::SetPiecePosition(const double InX, const double InY)
+void ABasePiece::SetPiecePosition(const int32 InX, const int32 InY)
 {
 	PieceGridPosition.Set(InX, InY);
 }

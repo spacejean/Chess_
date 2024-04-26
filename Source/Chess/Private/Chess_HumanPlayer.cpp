@@ -138,7 +138,11 @@ void AChess_HumanPlayer::OnClick()
 			{
 				//se clicco prima sul pezzo nero 
 				//devo fare un controllo 
-				GameMode->movepiece2(FVector2D(0,0),ClickedBasePiece,memPiece);				
+
+				if(memPiece->GetPieceColor() == EPieceColor::WHITE)
+				{
+				GameMode->movepiece2(ClickedBasePiece,memPiece);				
+				}
 			}
 
 
@@ -161,8 +165,10 @@ void AChess_HumanPlayer::OnClick()
 				//{
 					//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
 
-			
-			for (auto* elem : GameMode->GField->PossibleMoves)
+			if (memPiece->GetPieceColor() == EPieceColor::WHITE)
+			{
+				TArray<ATile*> PMoves = GameMode->GField->PossibleMoves;
+			for (auto* elem : PMoves)
 			{
 				if (ClickedTile == elem)
 				{
@@ -178,6 +184,7 @@ void AChess_HumanPlayer::OnClick()
 					continue;
 				}
 
+			}
 			}
 
 				

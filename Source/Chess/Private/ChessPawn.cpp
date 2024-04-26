@@ -84,7 +84,7 @@ void AChessPawn::CalculateMoves(bool bDrawAvailableMoves)
     if (ForwardTile && !ForwardTile->GetOccupyingChessPiece())
     {
         GameMode->GField->PossibleMoves.Add(ForwardTile);
-        ForwardTile->SetMaterial(2);
+       // ForwardTile->SetMaterial(2);
         // Se richiesto, cambia il materiale della casella
         // if (bDrawAvailableMoves)
         // {
@@ -100,7 +100,7 @@ void AChessPawn::CalculateMoves(bool bDrawAvailableMoves)
             if (DoubleForwardTile && !DoubleForwardTile->GetOccupyingChessPiece())
             {
                 GameMode->GField->PossibleMoves.Add(DoubleForwardTile);
-                DoubleForwardTile->SetMaterial(2);
+              //  DoubleForwardTile->SetMaterial(2);
 
                 // Se richiesto, cambia il materiale della casella
                 // if (bDrawAvailableMoves)
@@ -121,7 +121,7 @@ void AChessPawn::CalculateMoves(bool bDrawAvailableMoves)
             AttackTile->GetOccupyingChessPiece()->GetPieceColor() != GetPieceColor())
         {
             GameMode->GField->PossibleMoves.Add(AttackTile);
-            AttackTile->SetMaterial(3);
+           // AttackTile->SetMaterial(3);
             // Se richiesto, cambia il materiale della casella
             // if (bDrawAvailableMoves)
             // {
@@ -129,4 +129,43 @@ void AChessPawn::CalculateMoves(bool bDrawAvailableMoves)
             // }
         }
     }
+
+
+
+
+    // if (counter%2!=0)
+    //{
+    //    for (auto& position : GameMode->GField->PossibleMoves) {
+
+
+    //        position->SetMaterial(4);
+    //    }
+       // GameMode->GField->GetTileByLocation(this->GetGridPosition())->SetMaterial(4);
+    //}
+    //else
+    //{
+    for (auto& position : GameMode->GField->PossibleMoves) {
+
+        auto* occupyingPiece = position->GetOccupyingChessPiece();
+
+        if (occupyingPiece && occupyingPiece->GetPieceColor() != this->GetPieceColor())
+        {
+            position->SetMaterial(3);
+
+        }
+        else
+        {
+            position->SetMaterial(2);
+        }
+    }
+
+
+    //   }
+
+
+  // counter++;
+
+
+
+
 }

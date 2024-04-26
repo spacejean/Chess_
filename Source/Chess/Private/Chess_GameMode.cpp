@@ -59,7 +59,10 @@ void AChess_GameMode::BeginPlay()
 
 void AChess_GameMode::ChoosePlayerAndStartGame()
 {
-	CurrentPlayer = FMath::RandRange(0, Players.Num() - 1);
+
+	//CurrentPlayer = FMath::RandRange(0, Players.Num() - 1);
+
+	CurrentPlayer = 0;
 
 	for (int32 i = 0; i < Players.Num(); i++)
 	{
@@ -135,16 +138,18 @@ AGameField* AChess_GameMode::GetGameField() const
 void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 {
 	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
-	for (auto* elem : GameMode->GField->PossibleMoves) {
+	TArray<ATile*> PMoves = GField->PossibleMoves;
+	for (auto* elem : PMoves) {
 
 
 		if (tile->GetGridPosition() == elem->GetGridPosition()) {
 			int32 x = tile->GetGridPosition()[0];
 			int32 y = tile->GetGridPosition()[1];
-			FVector position = FVector(x * 120, y * 120, 0.2);
-			piece->SetActorLocation(position);
-			piece->SetPiecePosition(x,y);
+			FVector position = FVector(x * 120, y * 120, 0.3);
+			
 			GField->SelectedTile->SetOccupyingChessPiece(nullptr);
+			piece->SetPiecePosition(x,y);
+			piece->SetActorLocation(position);
 			tile->SetOccupyingChessPiece(piece);
 			
 		}
@@ -152,14 +157,16 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	}
 
 	GField->ResetTilesColor();
+
 	TurnNextPlayer();
 
 }
 
-void AChess_GameMode::movepiece2(FVector2D fpos, ABasePiece* PieceB, ABasePiece* MyPiece)
+void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 {
 	bool tempr = false;
-	for (auto* elem : GField->PossibleMoves)
+	TArray<ATile*> PMoves = GField->PossibleMoves;
+	for (auto* elem : PMoves)
 	{
 		if (PieceB->GetGridPosition() == elem->GetGridPosition())
 		{
@@ -187,6 +194,7 @@ void AChess_GameMode::movepiece2(FVector2D fpos, ABasePiece* PieceB, ABasePiece*
 
 		}
 		GField->ResetTilesColor();
+		
 		TurnNextPlayer();
 
 	}

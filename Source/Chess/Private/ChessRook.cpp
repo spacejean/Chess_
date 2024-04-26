@@ -41,10 +41,10 @@ void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
                 GameMode->GField->PossibleMoves.Add(Tile);
 
                 // Se richiesto, cambia il materiale della casella
-                if (bDrawAvailableMoves && Tile)
-                {
-                    Tile->SetMaterial(2);
-                }
+               // if (bDrawAvailableMoves && Tile)
+               // {
+               //     Tile->SetMaterial(2);
+               // }
             }
             // Se c'è una pedina sulla casella, aggiungi la posizione ai possibili movimenti solo se la pedina è avversaria
             else if (Tile->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
@@ -52,10 +52,10 @@ void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
                 GameMode->GField->PossibleMoves.Add(Tile);
 
                 // Se richiesto, cambia il materiale della casella
-                if (bDrawAvailableMoves)
-                {
-                    Tile->SetMaterial(3);
-                }
+               // if (bDrawAvailableMoves)
+               // {
+               //     Tile->SetMaterial(3);
+               // }
 
                 // Non è possibile muoversi oltre questa casella
                 break;
@@ -70,4 +70,39 @@ void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
             NewPosition += Direction;
         }
     }
+
+
+
+    // if (counter%2!=0)
+        //{
+        //    for (auto& position : GameMode->GField->PossibleMoves) {
+
+
+        //        position->SetMaterial(4);
+        //    }
+           // GameMode->GField->GetTileByLocation(this->GetGridPosition())->SetMaterial(4);
+        //}
+        //else
+        //{
+    for (auto& position : GameMode->GField->PossibleMoves) {
+
+        auto* occupyingPiece = position->GetOccupyingChessPiece();
+
+        if (occupyingPiece && occupyingPiece->GetPieceColor() != this->GetPieceColor())
+        {
+            position->SetMaterial(3);
+
+        }
+        else
+        {
+            position->SetMaterial(2);
+        }
+    }
+
+
+    //   }
+
+
+  // counter++;
+
 }
