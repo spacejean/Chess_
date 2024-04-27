@@ -52,7 +52,7 @@ public:
 	int32 GetOwner();
 
 	// set the (x, y) position
-	void SetPiecePosition(const int32 InX, const int32 InY);
+	void SetPiecePosition(const double InX, const double InY);
 
 	// get the (x, y) position
 	FVector2D GetGridPosition();

@@ -138,20 +138,26 @@ AGameField* AChess_GameMode::GetGameField() const
 void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 {
 	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
-	TArray<ATile*> PMoves = GField->PossibleMoves;
-	for (auto* elem : PMoves) {
+	//TArray<ATile*> PMoves = GField->PossibleMoves;
+	for (auto* elem : GField->PossibleMoves) {
 
 
 		if (tile->GetGridPosition() == elem->GetGridPosition()) {
 			int32 x = tile->GetGridPosition()[0];
 			int32 y = tile->GetGridPosition()[1];
-			FVector position = FVector(x * 120, y * 120, 0.3);
 			
+			int32 px = piece->GetGridPosition()[0];
+			int32 py = piece->GetGridPosition()[1];
+
+			FVector2D positionb = FVector2D(px, py);
+			
+			FVector position = FVector(x * 120, y * 120, 0.3);
+			piece->SetActorLocation(position);
 			GField->SelectedTile->SetOccupyingChessPiece(nullptr);
 			piece->SetPiecePosition(x,y);
-			piece->SetActorLocation(position);
 			tile->SetOccupyingChessPiece(piece);
-			
+			GField->PieceMap.Add(FVector2D(x,y), piece);
+			GField->PieceMap.Remove(positionb);
 		}
 
 	}
@@ -165,8 +171,8 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 {
 	bool tempr = false;
-	TArray<ATile*> PMoves = GField->PossibleMoves;
-	for (auto* elem : PMoves)
+	 
+	for (auto* elem : GField->PossibleMoves)
 	{
 		if (PieceB->GetGridPosition() == elem->GetGridPosition())
 		{
@@ -175,15 +181,19 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 	}
 	if (tempr)
 	{
+		if(PieceB != nullptr)
+		{
 		if (GField->PieceMap.Contains(PieceB->GetGridPosition()))
 		{
 		MyPiece->SetActorLocation(PieceB->GetActorLocation());
 		int32 x = PieceB->GetGridPosition()[0];
 		int32 y = PieceB->GetGridPosition()[1];
 		
-		PieceB->Destroy();
-		
 		GField->PieceMap.Remove(PieceB->GetGridPosition());
+		PieceB->Destroy();
+		GField->PieceArray.Remove(PieceB);
+		
+		
 		MyPiece->SetPiecePosition(x, y);
 		GField->PieceMap.Add(MyPiece->GetGridPosition(), MyPiece);
 		GField->SelectedTile->SetOccupyingChessPiece(nullptr);
@@ -196,6 +206,6 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 		GField->ResetTilesColor();
 		
 		TurnNextPlayer();
-
+		}
 	}
 }
