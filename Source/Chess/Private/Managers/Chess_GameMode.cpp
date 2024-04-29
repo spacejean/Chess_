@@ -6,7 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Players/Chess_HumanPlayer.h"
 #include "Players/Chess_RandomPlayer.h"
-#include "Hud/ChessHUD.h"
+#include "HUD/ChessHUD.h"
 //#include "TTT_MinimaxPlayer.h"
 #include "EngineUtils.h"
 
@@ -29,11 +29,11 @@ void AChess_GameMode::BeginPlay()
 	MoveCounter = 0;
 
 	
-	ChessHUD = Cast<AChessHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	/*ChessHUD = Cast<AChessHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	if (ChessHUD == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Chess HUD was null in Gamemode"));
-	}
+	}*/
 
 	AChess_HumanPlayer* HumanPlayer = Cast<AChess_HumanPlayer>(*TActorIterator<AChess_HumanPlayer>(GetWorld()));
 

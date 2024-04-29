@@ -113,7 +113,7 @@ void AChess_HumanPlayer::OnClick()
 				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
 				
 				
-				ClickedBasePiece->CalculateMoves(true);
+				ClickedBasePiece->CalculateMoves();
 				//Ho messo il cambio di turno del giocatore dentro le funzioni move e move2 della GameMode
 
 				//GameMode->TurnNextPlayer();

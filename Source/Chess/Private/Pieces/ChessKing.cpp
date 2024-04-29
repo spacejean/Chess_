@@ -5,7 +5,7 @@
 #include "Tile.h"
 #include "Managers/Chess_GameMode.h"
 
-void AChessKing::CalculateMoves(bool bDrawAvailableMoves)
+void AChessKing::CalculateMoves()
 {
     TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());

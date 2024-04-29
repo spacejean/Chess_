@@ -15,5 +15,5 @@ class CHESS_API AChessBishop : public ABasePiece
 {
 	GENERATED_BODY()
 
-	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
+	virtual void CalculateMoves() override;
 };

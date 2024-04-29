@@ -14,7 +14,7 @@ UCLASS()
 class CHESS_API AChessKing : public ABasePiece
 {
 	GENERATED_BODY()
-	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
+	virtual void CalculateMoves() override;
 
 	//definisci le direzione di movimento possibili per i pezzi
 	virtual TArray<FVector2D> GetMovementDirections() const override;

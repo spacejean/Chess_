@@ -60,7 +60,7 @@ public:
 	// Set material function
 	void SetMaterial(class UMaterialInterface* Material);
 
-	virtual void CalculateMoves(bool bDrawAvailableMove);
+	virtual void CalculateMoves();
 
 	//define the possible direction of movement for the pieces
 	virtual TArray<FVector2D> GetMovementDirections() const;

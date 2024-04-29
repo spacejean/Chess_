@@ -10,7 +10,7 @@
 
 
 
-void AChessBishop::CalculateMoves(bool bDrawAvailableMoves)
+void AChessBishop::CalculateMoves()
 {
     TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());

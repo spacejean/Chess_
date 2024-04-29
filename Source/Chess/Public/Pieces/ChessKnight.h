@@ -18,6 +18,6 @@ class CHESS_API AChessKnight : public ABasePiece
 public:
 	int32 counter = 0;
 	
-	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
+	virtual void CalculateMoves() override;
 	
 };

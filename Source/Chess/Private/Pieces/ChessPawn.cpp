@@ -12,7 +12,7 @@ AChessPawn::AChessPawn()
 }
 
 
-void AChessPawn::CalculateMoves(bool bDrawAvailableMoves)
+void AChessPawn::CalculateMoves()
 {
     TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());

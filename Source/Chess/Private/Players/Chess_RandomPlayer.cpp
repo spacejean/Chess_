@@ -89,7 +89,7 @@ void AChess_RandomPlayer::OnTurn()
 				if (SelectedPiece->GetPieceColor() == EPieceColor::BLACK)
 				{
 					// Calcola le mosse possibili per il pezzo selezionato
-					SelectedPiece->CalculateMoves(true);
+					SelectedPiece->CalculateMoves();
 
 					// Verifica se ci sono mosse possibili per il pezzo selezionato
 					if (GameMode->GField->PossibleMoves.Num() > 0)

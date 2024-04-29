@@ -8,7 +8,7 @@
 
 
 
-void AChessRook::CalculateMoves(bool bDrawAvailableMoves)
+void AChessRook::CalculateMoves()
 {
     TArray<ATile*> temp;
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());

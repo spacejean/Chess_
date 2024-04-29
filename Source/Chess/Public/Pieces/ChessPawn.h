@@ -15,5 +15,5 @@ class CHESS_API AChessPawn : public ABasePiece
 	GENERATED_BODY()
 	AChessPawn();
 	
-	virtual void CalculateMoves(bool bDrawAvailableMove) override;
+	virtual void CalculateMoves() override;
 };

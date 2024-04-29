@@ -75,7 +75,7 @@ void ABasePiece::SetMaterial(UMaterialInterface* Material)
 
 
 
-void ABasePiece::CalculateMoves(bool bDrawAvailableMove)
+void ABasePiece::CalculateMoves()
 {
 }
 
