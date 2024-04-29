@@ -147,11 +147,15 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 		{
 			tempr = true;
 		}
-		else
-		{
-			GField->ResetTilesColor();
-		}
+		
 	}
+
+	
+	if (tempr == false)
+	{
+		GField->ResetTilesColor();
+	}
+
 	if (tempr)
 	{
 		if(PieceB != nullptr)

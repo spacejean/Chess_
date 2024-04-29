@@ -1,13 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-//TODO SE MENTRE CLICCO 
-//Clicco e posso selezionare un pezzo avversario
-//clicco es posso selezionare un pezzo dello stesso colore mio
-
 #include "Chess_HumanPlayer.h"
 #include "GameField.h"
-//aggiunto 12 04
 #include "Tile.h"
 #include "Chess_GameMode.h"
 #include "Components/InputComponent.h"
@@ -147,10 +142,12 @@ void AChess_HumanPlayer::OnClick()
 		}
 		
 		
-		//verifico se l'oggeto colpito è di tipo Tile
+		
 
 		if(memPiece !=  nullptr)
 		{
+
+			//verifico se l'oggeto colpito è di tipo Tile
 		if (ATile* ClickedTile = Cast<ATile>(Hit.GetActor()))
 		{
 			//controllo se tra le mie possibile tile c'è una tile che appartenga ai possibili movimenti

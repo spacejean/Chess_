@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Tile.h"
-
 #include "ChessKing.h"
 #include "ChessQueen.h"
 #include "ChessBishop.h"
@@ -14,8 +13,7 @@
 #include "GameFramework/Actor.h"
 #include "GameField.generated.h"
 
-// macro declaration for a dynamic multicast delegate
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReset);
+
 
 UCLASS()
 class CHESS_API AGameField : public AActor
@@ -46,17 +44,9 @@ public:
 
 
 
-	//NONVA
-	/*
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float NormalizedCellPadding;
-	*/
 	static const int32 NOT_ASSIGNED = -1;
 
-	// BlueprintAssignable Usable with Multicast Delegates only. Exposes the property for assigning in Blueprints.
-	// declare a variable of type FOnReset (delegate)
-	UPROPERTY(BlueprintAssignable)
-	FOnReset OnResetEvent;
+	
 
 	// size of field
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -82,9 +72,6 @@ public:
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATile> TileClass;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABasePiece> PieceClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABasePiece> WKingClass;
@@ -124,10 +111,6 @@ public:
 
 
 	
-	//NONVA
-	// tile padding dimension
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float CellPadding;
 
 	// tile size
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -139,10 +122,6 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	// remove all signs from the field
-	//UFUNCTION(BlueprintCallable)
-	//void ResetField();
 
 	//remove all possible moves
 	void ResetPossibleMoves();
@@ -171,7 +150,6 @@ public:
 	//return the array of piece pointers
 	TArray<ABasePiece*>& GetPieceArray();
 
-	
 
 	// return a relative position given (x,y) position
 	FVector GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const;
@@ -182,22 +160,7 @@ public:
 	// return the tile given a position
 	ATile* GetTileByLocation(const FVector2D& Location) const;
 
-	//cancellare
-
-	// check if a position is a win position
-	bool IsWinPosition(const FVector2D Position) const;
-
-	// check if is a win line
-	inline bool IsWinLine(const FVector2D Begin, const FVector2D End) const;
-
-	// checking if is a valid field position
-	inline bool IsValidPosition(const FVector2D Position) const;
-
-	// get a line given a begin and end positions
-	TArray<int32> GetLine(const FVector2D Begin, const FVector2D End) const;
-
-	// check if a line contains all equal elements
-	bool AllEqual(const TArray<int32>& Array) const;
+	
 
 	//public:	
 	//	// Called every frame

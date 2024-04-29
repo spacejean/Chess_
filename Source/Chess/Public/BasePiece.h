@@ -60,26 +60,14 @@ public:
 	// Set material function
 	void SetMaterial(class UMaterialInterface* Material);
 
-
-
-	
 	virtual void CalculateMoves(bool bDrawAvailableMove);
 
-	//definisci le direzione di movimento possibili per i pezzi
+	//define the possible direction of movement for the pieces
 	virtual TArray<FVector2D> GetMovementDirections() const;
 	
 		
-	//virtual  TArray<ATile*> CalculateAvailableMoves();
-
+	//Check if the position on the board is valid
 	bool IsValidBoardPosition(const FVector2D& Position) const ;
-
-	
-
-
-	
-
-	//UFUNCTION(BlueprintCallable, Category = "Chess")
-	//virtual  void MoveToPosition(const FVector2D& NewPosition);
 
 	// Eliminates piece from the game.
 	UFUNCTION()
@@ -113,13 +101,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Chess")
 	bool bIsWhite;
 
-	// Variable to check if pawn has ever moved.
-	UPROPERTY(EditAnywhere)
-	bool bHasEverMoved;
-
-
-
-
+	
 
 private:
 	UMaterialInterface* CurrentMaterial;

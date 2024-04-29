@@ -3,7 +3,6 @@
 
 #include "GameField.h"
 #include "Kismet/GameplayStatics.h"
-#include "BaseSign.h"
 #include "Chess_GameMode.h"
 
 // Sets default values
@@ -18,9 +17,7 @@ AGameField::AGameField()
 	Size = 8;
 	// tile dimension
 	TileSize = 120;
-	//NONVA
-	// tile padding dimension
-	CellPadding = 20;
+	
 
 
 }
@@ -34,24 +31,7 @@ void AGameField::BeginPlay()
 	GeneratePieces();
 }
 
-/*
-void AGameField::ResetField()
-{
-	for (ATile* Obj : TileArray)
-	{
-		Obj->SetTileStatus(NOT_ASSIGNED, ETileStatus::EMPTY);
-	}
 
-	// send broadcast event to registered objects 
-	OnResetEvent.Broadcast();
-
-	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
-	GameMode->IsGameOver = false;
-	GameMode->MoveCounter = 0;
-	GameMode->ChoosePlayerAndStartGame();
-}
-
-*/
 
 
 void AGameField::GenerateField()
@@ -424,112 +404,6 @@ ATile* AGameField::GetTileByLocation(const FVector2D& Location) const
 	return nullptr;
 }
 
-
-bool AGameField::IsWinPosition(const FVector2D Position) const
-{
-	const int32 Offset = WinSize - 1;
-	// vertical lines
-	for (int32 i = Position[0] - Offset; i <= Position[0]; i++)
-	{
-		if (IsWinLine(FVector2D(i, Position[1]), FVector2D(i + Offset, Position[1])))
-		{
-			return true;
-		}
-	}
-
-	// horizontal lines
-	for (int32 i = Position[1] - Offset; i <= Position[1]; i++)
-	{
-		if (IsWinLine(FVector2D(Position[0], i), FVector2D(Position[0], i + Offset)))
-		{
-			return true;
-		}
-	}
-
-	// diagonal lines
-	for (int32 i = -Offset; i <= 0; i++)
-	{
-		if (IsWinLine(FVector2D(Position[0] + i, Position[1] + i), FVector2D(Position[0] + Offset + i, Position[1] + Offset + i)))
-		{
-			return true;
-		}
-		if (IsWinLine(FVector2D(Position[0] + i, Position[1] - i), FVector2D(Position[0] + Offset + i, Position[1] - Offset - i)))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-inline bool AGameField::IsWinLine(const FVector2D Begin, const FVector2D End) const
-{
-	return IsValidPosition(Begin) && IsValidPosition(End) && AllEqual(GetLine(Begin, End));
-}
-
-inline bool AGameField::IsValidPosition(const FVector2D Position) const
-{
-	return 0 <= Position[0] && Position[0] < Size && 0 <= Position[1] && Position[1] < Size;
-}
-
-TArray<int32> AGameField::GetLine(const FVector2D Begin, const FVector2D End) const
-{
-	int32 xSign;
-	if (Begin[0] == End[0])
-	{
-		xSign = 0;
-	}
-	else
-	{
-		xSign = Begin[0] < End[0] ? 1 : -1;
-	}
-
-	int32 ySign;
-	if (Begin[1] == End[1])
-	{
-		ySign = 0;
-	}
-	else
-	{
-		ySign = Begin[1] < End[1] ? 1 : -1;
-	}
-
-	TArray<int32> Line;
-	int32 x = Begin[0] - xSign;
-	int32 y = Begin[1] - ySign;
-	do
-	{
-		x += xSign;
-		y += ySign;
-		Line.Add((TileMap[FVector2D(x, y)])->GetOwner());
-	} while (x != End[0] || y != End[1]);
-
-	return Line;
-}
-
-bool AGameField::AllEqual(const TArray<int32>& Array) const
-{
-	if (Array.Num() == 0)
-	{
-		return false;
-	}
-	const int32 Value = Array[0];
-
-	if (Value == NOT_ASSIGNED)
-	{
-		return false;
-	}
-
-	for (int32 i = 1; i < Array.Num(); i++)
-	{
-		if (Value != Array[i])
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
 
 void AGameField::ResetPossibleMoves()
 {

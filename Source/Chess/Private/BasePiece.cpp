@@ -18,7 +18,7 @@ ABasePiece::ABasePiece()
 	SetRootComponent(Scene);
 	StaticMeshComponent->SetupAttachment(Scene);
 	CurrentMaterial = nullptr;
-	bHasEverMoved = false;
+
 	PColor = EPieceColor::EMPTY;
 	PType = EPieceType::EMPTY;
 	PieceOwner = -1;
