@@ -15,10 +15,8 @@ UCLASS()
 class CHESS_API AChessRook : public ABasePiece
 {
 	GENERATED_BODY()
-	virtual void GenerateMoves() override;
-	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
-	
-	
 
+	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
+		
 };
 	

@@ -30,7 +30,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	// keeps track of turn
-	bool IsMyTurn = false;
+	//bool IsMyTurn = false;
 
 public:	
 	// Called every frame

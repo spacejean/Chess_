@@ -25,14 +25,7 @@ AGameField::AGameField()
 
 }
 
-//NONVA
-/*void AGameField::OnConstruction(const FTransform& Transform)
-{
-	Super::OnConstruction(Transform);
-	//normalized tilepadding
-	NormalizedCellPadding = FMath::RoundToDouble(((TileSize) / TileSize) * 100) / 100;
-}
-*/
+
 // Called when the game starts or when spawned
 void AGameField::BeginPlay()
 {
@@ -41,6 +34,7 @@ void AGameField::BeginPlay()
 	GeneratePieces();
 }
 
+/*
 void AGameField::ResetField()
 {
 	for (ATile* Obj : TileArray)
@@ -56,6 +50,9 @@ void AGameField::ResetField()
 	GameMode->MoveCounter = 0;
 	GameMode->ChoosePlayerAndStartGame();
 }
+
+*/
+
 
 void AGameField::GenerateField()
 {
@@ -99,15 +96,7 @@ void AGameField::GenerateField()
 
 			}
 			
-			/*
-			FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-			ATile* Obj = GetWorld()->SpawnActor<ATile>(TileClass, Location, FRotator::ZeroRotator);
-			const float TileScale = TileSize / 100;
-			Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-			Obj->SetGridPosition(x, y);
-			TileArray.Add(Obj);
-			TileMap.Add(FVector2D(x, y), Obj);
-			*/
+			
 		}
 	}
 }
@@ -158,7 +147,8 @@ void AGameField::GeneratePieces()
 
 			else if (x == 0)
 			{
-				if (y == 0) {
+				if (y == 0) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WRookClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -175,7 +165,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 7) {
+				else if (y == 7) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WRookClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -192,7 +183,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 1 || y == 6) {
+				else if (y == 1 || y == 6) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WKnightClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -208,7 +200,8 @@ void AGameField::GeneratePieces()
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
-				else if (y == 2 || y==5) {
+				else if (y == 2 || y==5) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WBishopClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -225,7 +218,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 3) {
+				else if (y == 3) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WQueenClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -242,7 +236,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 4) {
+				else if (y == 4) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WKingClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -262,85 +257,11 @@ void AGameField::GeneratePieces()
 
 			}
 
-
-			//prueba nomas
-			/*
-			else if (x == 2)
-			{
-				if (y == 7) {
-					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BRookClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
-					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetPiecePosition(x, y);
-					Obj->SetPieceColor(EPieceColor::BLACK);
-					Obj->SetPieceType(EPieceType::ROOK);
-					FVector2D PieceLocation = Obj->GetGridPosition();
-					ATile* Tile = GetTileByLocation(PieceLocation);
-					Tile->SetOccupyingChessPiece(Obj);
-					PieceArray.Add(Obj);
-					PieceMap.Add(FVector2D(x, y), Obj);
-				}
-				if (y == 5) {
-					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BRookClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
-					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.2));
-					Obj->SetPiecePosition(x, y);
-					Obj->SetPieceColor(EPieceColor::BLACK);
-					Obj->SetPieceType(EPieceType::ROOK);
-					FVector2D PieceLocation = Obj->GetGridPosition();
-					ATile* Tile = GetTileByLocation(PieceLocation);
-					Tile->SetOccupyingChessPiece(Obj);
-					PieceArray.Add(Obj);
-					PieceMap.Add(FVector2D(x, y), Obj);
-				}
-			}
-			*/
-
-			else if (x == 4)
-			{
-				if (y == 3) {
-					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WQueenClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
-					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
-					Obj->SetPiecePosition(x, y);
-					Obj->SetPieceColor(EPieceColor::WHITE);
-					Obj->SetPieceType(EPieceType::ROOK);
-					FVector2D PieceLocation = Obj->GetGridPosition();
-					ATile* Tile = GetTileByLocation(PieceLocation);
-					Tile->SetOccupyingChessPiece(Obj);
-					PieceArray.Add(Obj);
-					PieceMap.Add(FVector2D(x, y), Obj);
-				}
-				if (y == 4) {
-					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
-					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WBishopClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
-					const float TileScale = TileSize / 100;
-					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
-					Obj->SetPiecePosition(x, y);
-					Obj->SetPieceColor(EPieceColor::WHITE);
-					Obj->SetPieceType(EPieceType::BISHOP);
-					FVector2D PieceLocation = Obj->GetGridPosition();
-					ATile* Tile = GetTileByLocation(PieceLocation);
-					Tile->SetOccupyingChessPiece(Obj);
-					PieceArray.Add(Obj);
-					PieceMap.Add(FVector2D(x, y), Obj);
-				}
-			}
-			//fine prova
+			
 			else if (x == 7)
 			{
-				if (y == 0 || y == 7) {
+				if (y == 0 || y == 7) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BRookClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -357,7 +278,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 1 || y == 6) {
+				else if (y == 1 || y == 6) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BKnightClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -373,7 +295,8 @@ void AGameField::GeneratePieces()
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
-				else if (y == 2 || y == 5) {
+				else if (y == 2 || y == 5) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BBishopClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -390,7 +313,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 3) {
+				else if (y == 3) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BQueenClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -407,7 +331,8 @@ void AGameField::GeneratePieces()
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
 
-				else if (y == 4) {
+				else if (y == 4) 
+				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BKingClass, Location, FRotator::ZeroRotator);
 					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
@@ -434,14 +359,17 @@ void AGameField::GeneratePieces()
 
 void AGameField::ResetTilesColor()
 {
-	for (auto& position : PossibleMoves) {
-
-
+	for (auto& position : PossibleMoves) 
+	{
 		position->SetMaterial(4);
 	}
-	//SelectedTile->SetMaterial(4);
-	//GetTileByLocation(m->GetGridPosition())->SetMaterial(4);
 	ResetPossibleMoves();
+}
+
+void AGameField::ResetGa()
+{
+	
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
 
 FVector2D AGameField::GetPosition(const FHitResult& Hit)
@@ -466,27 +394,13 @@ TArray<ABasePiece*>& AGameField::GetPieceArray()
 
 
 
-/*
-FVector AGameField::GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const
-{
-	return TileSize * NormalizedCellPadding * FVector(InX, InY, 0);
-}
-*/
 
 FVector AGameField::GetRelativeLocationByXYPosition(const int32 InX, const int32 InY) const
 {
 	return TileSize * FVector(InX, InY, 0);
 }
 
-/*
-FVector2D AGameField::GetXYPositionByRelativeLocation(const FVector& Location) const
-{
-	const double x = Location[0] / (TileSize * NormalizedCellPadding);
-	const double y = Location[1] / (TileSize * NormalizedCellPadding);
-	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), x, y));
-	return FVector2D(x, y);
-}
-*/
+
 
 FVector2D AGameField::GetXYPositionByRelativeLocation(const FVector& Location) const
 {
@@ -496,7 +410,7 @@ FVector2D AGameField::GetXYPositionByRelativeLocation(const FVector& Location) c
 	return FVector2D(x, y);
 }
 
-//13-04-2024
+
 ATile* AGameField::GetTileByLocation(const FVector2D& Location) const
 {
 	for (ATile* Tile : TileArray)
@@ -619,7 +533,6 @@ bool AGameField::AllEqual(const TArray<int32>& Array) const
 
 void AGameField::ResetPossibleMoves()
 {
-
 	PossibleMoves.Empty();
 }
 

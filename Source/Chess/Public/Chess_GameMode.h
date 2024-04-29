@@ -6,6 +6,7 @@
 #include "Chess_PlayerInterface.h"
 #include "GameField.h"
 #include "BasePiece.h"
+#include "ChessHUD.h"
 #include "GameFramework/GameModeBase.h"
 #include "Chess_GameMode.generated.h"
 
@@ -29,6 +30,9 @@ public:
 	// tracks the number of moves in order to signal a drawn game
 	int32 MoveCounter;
 
+	// keeps track of turn
+	bool _IsMyTurn_ = false;
+
 	// TSubclassOf is a template class that provides UClass type safety.
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGameField> GameFieldClass;
@@ -40,6 +44,8 @@ public:
 	// reference to a GameField object
 	UPROPERTY(VisibleAnywhere)
 	AGameField* GField;
+
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AActor> SignXActor;
@@ -55,8 +61,6 @@ public:
 	// called at the start of the game
 	void ChoosePlayerAndStartGame();
 
-	// set the cell sign and the position 
-	void SetCellSign(const int32 PlayerNumber, const FVector& SpawnPosition);
 
 	// get the next player index
 	int32 GetNextPlayer(int32 Player);
@@ -64,9 +68,17 @@ public:
 	// called at the end of the game turn
 	void TurnNextPlayer();
 
-	// Funzione per ottenere il campo di gioco
+	// return the game field object
 	AGameField* GetGameField() const;
-
+	
+	//move a piece
 	void movepiece(ATile* tile, ABasePiece* piece);
+	
+
 	void movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece);
+
+	//reset the game
+	void ResetChess();
+protected:
+	AChessHUD* m_ChessHUD;
 };

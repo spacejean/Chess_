@@ -18,9 +18,7 @@ class CHESS_API AChessKing : public ABasePiece
 
 	//definisci le direzione di movimento possibili per i pezzi
 	virtual TArray<FVector2D> GetMovementDirections() const override;
-	void SetTile0Material(ATile* Tile, int32 MaterialIndex) const;
-	bool IsTileEmptyOrOccupiedByOpponent(ATile* Tile, const EPieceColor CColor) const;
-	bool IsTileEmpty(ATile* Tile) const;
+	
 };
 
 

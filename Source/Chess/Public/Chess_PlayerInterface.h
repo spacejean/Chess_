@@ -6,13 +6,7 @@
 #include "UObject/Interface.h"
 #include "Chess_PlayerInterface.generated.h"
 
-UENUM()
-enum class ESign : uint8
-{
-	X,
-	O,
-	E
-};
+
 
 
 
@@ -34,7 +28,6 @@ class CHESS_API IChess_PlayerInterface
 public:
 
 	int32 PlayerNumber;
-	ESign Sign;
 
 	virtual void OnTurn() {};
 	virtual void OnWin() {};

@@ -27,7 +27,7 @@ public:
 	UPROPERTY(Transient)
 	TArray<ATile*> TileArray;
 
-	// Array di tile delle possibile mosse
+	// keep tracks of possible moves
 	UPROPERTY(Transient)
 	TArray<ATile*> PossibleMoves;
 
@@ -67,11 +67,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 WinSize;
 
-	//Puntatore alla tile selezionata
+	// reference to a Tile object
 	UPROPERTY(BlueprintReadOnly, Category = "Chess")
 	ATile* SelectedTile;
 
-	//Puntatore alla tile selezionata
+	// reference to a Select Tile object
 	UPROPERTY(BlueprintReadOnly, Category = "Chess")
 	UMaterialInstance* SelectedTileMaterial;
 
@@ -82,7 +82,7 @@ public:
 	// TSubclassOf template class that provides UClass type safety
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATile> TileClass;
-	// TSubclassOf template class that provides UClass type safety
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABasePiece> PieceClass;
 
@@ -136,18 +136,15 @@ public:
 	// Sets default values for this actor's properties
 	AGameField();
 
-	//NONVA
-	// Called when an instance of this class is placed (in editor) or spawned
-	//virtual void OnConstruction(const FTransform& Transform) override;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	// remove all signs from the field
-	UFUNCTION(BlueprintCallable)
-	void ResetField();
+	//UFUNCTION(BlueprintCallable)
+	//void ResetField();
 
-	//rimuovi le possibili mosse
+	//remove all possible moves
 	void ResetPossibleMoves();
 
 	// generate an empty game field
@@ -157,9 +154,10 @@ public:
 	void GeneratePieces();
 
 
-	//rigenera il colore delle Tile
+	//Reset the original Tile color
 	void ResetTilesColor();
 
+	void ResetGa();
 
 	// return a (x,y) position given a hit (click) on a field tile
 	FVector2D GetPosition(const FHitResult& Hit);
@@ -181,9 +179,10 @@ public:
 	// return (x,y) position given a relative position
 	FVector2D GetXYPositionByRelativeLocation(const FVector& Location) const;
 
-	//13-04-2024
-	//ritorna un puntatore alla tile data la location
+	// return the tile given a position
 	ATile* GetTileByLocation(const FVector2D& Location) const;
+
+	//cancellare
 
 	// check if a position is a win position
 	bool IsWinPosition(const FVector2D Position) const;

@@ -5,9 +5,7 @@
 #include "Tile.h"
 #include "Chess_GameMode.h"
 
-void AChessRook::GenerateMoves()
-{
-}
+
 
 
 void AChessRook::CalculateMoves(bool bDrawAvailableMoves)

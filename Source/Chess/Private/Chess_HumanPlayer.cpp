@@ -29,10 +29,7 @@ AChess_HumanPlayer::AChess_HumanPlayer()
 	SetRootComponent(Camera);
 	// get the game instance reference
 	GameInstance = Cast<UChess_GameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	// default init values
-	RedMaterial = Cast<UMaterialInstance>(StaticLoadObject(UMaterialInstance::StaticClass(), nullptr, TEXT("/Game/Materials/MaterialTile/MI_Red")));
 	PlayerNumber = -1;
-	Sign = ESign::E;
 	
 }
 
@@ -59,7 +56,9 @@ void AChess_HumanPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AChess_HumanPlayer::OnTurn()
 {
-	IsMyTurn = true;
+	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+	GameMode->_IsMyTurn_ = true;
+	
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Your Turn"));
 	GameInstance->SetTurnMessage(TEXT("Human Turn"));
 }
@@ -83,11 +82,12 @@ void AChess_HumanPlayer::OnClick()
 	FHitResult Hit = FHitResult(ForceInit);
 	// GetHitResultUnderCursor function sends a ray from the mouse position and gives the corresponding hit results
 	GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursor(ECollisionChannel::ECC_Pawn, true, Hit);
+	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
 	//Verifica se il colpo ha colpito qualcosa
-	if (Hit.bBlockingHit && IsMyTurn)
+	if (Hit.bBlockingHit && GameMode->_IsMyTurn_)
 	{
 		
-			AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+			
 			AGameField* GField = GameMode->GetGameField(); 
 			
 		
@@ -97,7 +97,7 @@ void AChess_HumanPlayer::OnClick()
 			//salvo la posizione del pezzo colpito
 			FVector2D Location = ClickedBasePiece->GetGridPosition();
 			//stampo la posizione del pezzo colpito(riscordati di cancellare)
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), Location[0], Location[1]));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), Location[0], Location[1]));
 			
 			//salvo la posizione della Tile dove ho colpito il pezzo
 			ATile* CTile = GField->GetTileByLocation(Location);
@@ -115,29 +115,21 @@ void AChess_HumanPlayer::OnClick()
 			//verifico se il pezzo colpito è bianco
 			if (PieceColor == EPieceColor::WHITE)  
 			{
-				//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
 				
-				//memorizza la Tile selezionata e il suo materiale originale
-				//GField->SelectedTile = CTile;
-				//GField->SelectedTileMaterial = CTile->GetMaterial(4);
-				//CTile->SetMaterial(2);
-				//CurrPiece->CalculateMoves(true);
+				
 				ClickedBasePiece->CalculateMoves(true);
-
-				//IsMyTurn = false;
+				//Ho messo il cambio di turno del giocatore dentro le funzioni move e move2 della GameMode
 
 				//GameMode->TurnNextPlayer();
 			
 			
 			}
 
-			//devo fare un controllo, perche quando è il mio turno nom dovrei muovermi
-			//verifico se il pezzo colpito è nero
+			
+			//verifico se il pezzo colpito è di colore nero
 			if (PieceColor == EPieceColor::BLACK)
 			{
-				//se clicco prima sul pezzo nero 
-				//devo fare un controllo 
 
 				if(memPiece->GetPieceColor() == EPieceColor::WHITE)
 				{
@@ -146,24 +138,22 @@ void AChess_HumanPlayer::OnClick()
 			}
 
 
+			//salvo il pezzo colpito per primeo dentro memPiece
 			memPiece = ClickedBasePiece;
+
+			//Salvo la tile dove ho colpito il pezzo per primo
 			GField->SelectedTile = CTile;
 
-			//if (CTile->GetMaterial(4) == RedMaterial) {
-			//	ClickedBasePiece->Eliminate();
-			//}
 		}
 		
-		//Devo fare un controllo se tra le mie possibile tile 
-
+		
 		//verifico se l'oggeto colpito è di tipo Tile
+
+		if(memPiece !=  nullptr)
+		{
 		if (ATile* ClickedTile = Cast<ATile>(Hit.GetActor()))
 		{
-			//controllo se tra le mie possibile tile c'è una tile che appartenga
-				
-			//if (ClickedTile->GetTileStatus() == ETileStatus::EMPTY)
-				//{
-					//if(CurrPiece->GetPieceType() == EPieceType::BISHOP){
+			//controllo se tra le mie possibile tile c'è una tile che appartenga ai possibili movimenti
 
 			if (memPiece->GetPieceColor() == EPieceColor::WHITE)
 			{
@@ -173,11 +163,7 @@ void AChess_HumanPlayer::OnClick()
 				if (ClickedTile == elem)
 				{
 					GameMode->movepiece(ClickedTile, memPiece);
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("ho mosso un pezzo"));
-					//GField->ResetTilesColor();
-					//GField->ResetPossibleMoves();
-					//ATile* Obj = nullptr;
-					//GameMode->TurnNextPlayer();
+					//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("ho mosso un pezzo"));
 				}
 				else
 				{
@@ -188,6 +174,7 @@ void AChess_HumanPlayer::OnClick()
 			}
 
 				
+		}
 		}
 	}
 }

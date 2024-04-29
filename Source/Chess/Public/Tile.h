@@ -39,21 +39,20 @@ public:
 	// get the (x, y) position
 	FVector2D GetGridPosition();
 
-	// Funzione per settare il colore della Tile
+	//set the color of the Tile
 	void SetMaterial(int32 color);
 
-	// Funzione per ottenere il colore della Tile
+	// get the color of the Tile
 	UMaterialInstance* GetMaterial(int32 Color) const;
 
-	//setto il pezzo sopra la tile
+	//set piece above the tile
 	void SetOccupyingChessPiece(ABasePiece* BasePiece);
 
-	//mi da il pezzo che sta occupando la tile
+	//get piece above the tile
 	ABasePiece* GetOccupyingChessPiece() const;
 	
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
-	UMaterialInstance* KillTile;
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -77,10 +76,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	UMaterialInstance* SuggestedTile;
 
-
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	UMaterialInstance* CheckTile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	UMaterialInstance* KillTile;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	UMaterialInstance* CurrentMaterial;
@@ -95,7 +95,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector2D TileGridPosition;
 
-	// Il pezzo degli scacchi eventualmente presente sulla casella
 	ABasePiece* OccupyingChessPiece;
 
 

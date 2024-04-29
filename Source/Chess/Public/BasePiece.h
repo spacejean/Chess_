@@ -60,11 +60,9 @@ public:
 	// Set material function
 	void SetMaterial(class UMaterialInterface* Material);
 
-	// reference to a GameField object
-	//UPROPERTY(VisibleAnywhere)
-	//AGameField* mGField;
 
-	virtual void GenerateMoves();
+
+	
 	virtual void CalculateMoves(bool bDrawAvailableMove);
 
 	//definisci le direzione di movimento possibili per i pezzi
@@ -76,12 +74,6 @@ public:
 	bool IsValidBoardPosition(const FVector2D& Position) const ;
 
 	
-	//virtual void movepiece(ATile* tile);
-	
-	
-	//funzione per muovere il pezzo in un altra posizione
-	virtual void Moves();
-	//virtual void DetecSelectableGrids(TArray<ATile*>* SelectableGrids);
 
 
 	
@@ -93,10 +85,7 @@ public:
 	UFUNCTION()
 	void Eliminate();
 	
-	TArray<FVector2D> GeneratePawnMoves(const FVector2D& CurrentPosition);
-	TArray<FVector2D> GenerateKingMoves(const FVector2D& CurrentPosition);
-	TArray<FVector2D> GenerateQueenMoves(const FVector2D& CurrentPosition);
-	TArray<FVector2D> GenerateKnightMoves(const FVector2D& CurrentPosition);
+	
 
 protected:
 	// Called when the game starts or when spawned

@@ -73,9 +73,7 @@ void ABasePiece::SetMaterial(UMaterialInterface* Material)
 	}
 }
 
-void ABasePiece::GenerateMoves()
-{
-}
+
 
 void ABasePiece::CalculateMoves(bool bDrawAvailableMove)
 {
@@ -92,29 +90,9 @@ bool ABasePiece::IsValidBoardPosition(const FVector2D& Position) const
 }
 
 
-void ABasePiece::Moves()
-{
-	FVector NewLocation = GetActorLocation()*2;
-	SetActorLocation(NewLocation);
-}
 
-/*
-void ABasePiece::DetecSelectableGrids(TArray<ATile*>* SelectableGrids)
-{
-}
 
-TArray<ATile*> ABasePiece::CalculateAvailableMoves()
-{
-	return TArray<ATile*>();
-}
 
-*/
-
-/*void ABasePiece::MoveToPosition(const FVector2D& NewPosition)
-{
-	//implementata nelle classi derivate
-}
-*/
 
 
 void ABasePiece::Eliminate()
@@ -123,29 +101,6 @@ void ABasePiece::Eliminate()
 	Destroy();
 }
 
-TArray<FVector2D> ABasePiece::GeneratePawnMoves(const FVector2D& CurrentPosition)
-{
-	TArray<FVector2D> PawnMoves;
-
-	int Direction = bIsWhite ? 1 : -1; // White pawns move up, black pawns move down
-
-	// Pawn can move one step forward
-	PawnMoves.Add(FVector2D(CurrentPosition.X, CurrentPosition.Y + Direction));
-
-	// If the pawn is in its initial position, it can move two steps forward
-	if ((bIsWhite && CurrentPosition.Y == 1) || (!bIsWhite && CurrentPosition.Y == 6))
-	{
-		PawnMoves.Add(FVector2D(CurrentPosition.X, CurrentPosition.Y + 2 * Direction));
-	}
-
-	// Pawn can capture diagonally
-	PawnMoves.Add(FVector2D(CurrentPosition.X + 1, CurrentPosition.Y + Direction));
-	PawnMoves.Add(FVector2D(CurrentPosition.X - 1, CurrentPosition.Y + Direction));
-
-	// TODO: Add additional conditions to filter out invalid moves, like capturing, en passant, etc.
-
-	return PawnMoves;
-}
 
 // Called when the game starts or when spawned
 void ABasePiece::BeginPlay()

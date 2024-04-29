@@ -57,17 +57,6 @@ void ATile::BeginPlay()
 
 }
 
-/*
-void ATile::SetMaterial(UMaterialInterface* Material)
-{
-	if (Material)
-	{
-		StaticMeshComponent->SetMaterial(0, Material);
-		CurrentMaterial = Material;
-	}
-}
-
-*/
 
 void ATile::SetMaterial(int32 Color)
 {
@@ -85,12 +74,12 @@ void ATile::SetMaterial(int32 Color)
 
 	else if (Color == 2)
 	{
-		StaticMeshComponent->SetMaterial(0, SelectedTile);
+		StaticMeshComponent->SetMaterial(0, SuggestedTile);
 		
 	}
 	else if (Color == 3)
 	{
-		StaticMeshComponent->SetMaterial(0, SuggestedTile);
+		StaticMeshComponent->SetMaterial(0, KillTile);
 		//CurrentMaterial = SuggestedTile;
 	}
 	else if (Color == 4)
@@ -99,7 +88,7 @@ void ATile::SetMaterial(int32 Color)
 	}
 	else if (Color == 5)
 	{
-		StaticMeshComponent->SetMaterial(0, KillTile);
+		StaticMeshComponent->SetMaterial(0, SelectedTile);
 	}
 }
 
@@ -116,16 +105,16 @@ UMaterialInstance* ATile::GetMaterial(int32 Color) const
 			Material = DarkTile;
 			break;
 		case 2:
-			Material = SelectedTile;
+			Material = SuggestedTile;
 			break;
 		case 3:
-			Material = SuggestedTile;
+			Material = KillTile;
 			break;
 		case 4:
 			Material = CurrentMaterial;
 			break;
 		case 5:
-			Material = KillTile;
+			Material = SelectedTile;
 			break;
 		default:
 			// Se il colore non è valido, restituisci nullptr o un'altra azione appropriata

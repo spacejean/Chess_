@@ -3,8 +3,10 @@
 
 #include "Chess_GameMode.h"
 #include "Chess_PlayerController.h"
+#include "GameFramework/Pawn.h"
 #include "Chess_HumanPlayer.h"
 #include "Chess_RandomPlayer.h"
+#include "ChessHUD.h"
 //#include "TTT_MinimaxPlayer.h"
 #include "EngineUtils.h"
 
@@ -26,10 +28,19 @@ void AChess_GameMode::BeginPlay()
 
 	MoveCounter = 0;
 
+
+	m_ChessHUD = Cast<AChessHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if (m_ChessHUD == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Chess HUD was null in Gamemode"));
+	}
+
 	AChess_HumanPlayer* HumanPlayer = Cast<AChess_HumanPlayer>(*TActorIterator<AChess_HumanPlayer>(GetWorld()));
+
 
 	if (GameFieldClass != nullptr)
 	{
+		
 		GField = GetWorld()->SpawnActor<AGameField>(GameFieldClass);
 		GField->Size = FieldSize;
 	}
@@ -39,8 +50,9 @@ void AChess_GameMode::BeginPlay()
 	}
 
 	//float CameraPosX = ((GField->TileSize * (FieldSize + ((FieldSize - 1) * GField->NormalizedCellPadding) - (FieldSize - 1))) / 2) - (GField->TileSize / 2);
-	float CameraPosX = ((GField->TileSize * (FieldSize ) )/ 2) ;
-	FVector CameraPos(CameraPosX, CameraPosX, 950.0f);
+	float CameraPosX = ((GField->TileSize * (FieldSize ) )/ 2) - (GField->TileSize / 2);;
+	//float CameraPosX = ((GField->TileSize * (GField->Size + ((GField->Size - 1) * GField->NormalizedCellPadding) - (GField->Size - 1))) / 2) - (GField->TileSize / 2);
+	FVector CameraPos(CameraPosX, CameraPosX, 1250.0f);
 	HumanPlayer->SetActorLocationAndRotation(CameraPos, FRotationMatrix::MakeFromX(FVector(0, 0, -1)).Rotator());
 
 	// Human player = 0
@@ -60,58 +72,15 @@ void AChess_GameMode::BeginPlay()
 void AChess_GameMode::ChoosePlayerAndStartGame()
 {
 
-	//CurrentPlayer = FMath::RandRange(0, Players.Num() - 1);
+	
 
 	CurrentPlayer = 0;
-
-	for (int32 i = 0; i < Players.Num(); i++)
-	{
-		Players[i]->PlayerNumber = i;
-		Players[i]->Sign = i == CurrentPlayer ? ESign::X : ESign::O;
-	}
 	MoveCounter += 1;
 	Players[CurrentPlayer]->OnTurn();
 }
 
-void AChess_GameMode::SetCellSign(const int32 PlayerNumber, const FVector& SpawnPosition)
-{
-	if (IsGameOver || PlayerNumber != CurrentPlayer)
-	{
-		return;
-	}
 
-	UClass* SignActor = Players[CurrentPlayer]->Sign == ESign::X ? SignXActor : SignOActor;
-	FVector Location = GField->GetActorLocation() + SpawnPosition + FVector(0, 0, 10);
-	GetWorld()->SpawnActor(SignActor, &Location);
 
-	if (GField->IsWinPosition(GField->GetXYPositionByRelativeLocation(SpawnPosition)))
-	{
-		IsGameOver = true;
-		Players[CurrentPlayer]->OnWin();
-		for (int32 i = 0; i < Players.Num(); i++)
-		{
-			if (i != CurrentPlayer)
-			{
-				Players[i]->OnLose();
-			}
-		}
-	}
-	else if (MoveCounter == (FieldSize * FieldSize))
-	{
-		// add a timer (3 seconds)
-		FTimerHandle TimerHandle;
-
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
-			{
-				// function to delay
-				GField->ResetField();
-			}, 3, false);
-	}
-	else
-	{
-		//TurnNextPlayer();
-	}
-}
 
 int32 AChess_GameMode::GetNextPlayer(int32 Player)
 {
@@ -163,7 +132,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	}
 
 	GField->ResetTilesColor();
-
+	_IsMyTurn_ = false;
 	TurnNextPlayer();
 
 }
@@ -177,6 +146,10 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 		if (PieceB->GetGridPosition() == elem->GetGridPosition())
 		{
 			tempr = true;
+		}
+		else
+		{
+			GField->ResetTilesColor();
 		}
 	}
 	if (tempr)
@@ -204,8 +177,16 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 
 		}
 		GField->ResetTilesColor();
+
 		
+		_IsMyTurn_ = false;
+
 		TurnNextPlayer();
 		}
 	}
+}
+
+void AChess_GameMode::ResetChess()
+{
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }

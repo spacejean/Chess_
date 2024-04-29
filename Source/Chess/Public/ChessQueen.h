@@ -13,6 +13,6 @@ UCLASS()
 class CHESS_API AChessQueen : public ABasePiece
 {
 	GENERATED_BODY()
-	virtual void GenerateMoves() override;
+	
 	virtual void CalculateMoves(bool bDrawAvailableMoves) override;
 };
