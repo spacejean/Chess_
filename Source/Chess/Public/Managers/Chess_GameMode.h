@@ -46,13 +46,6 @@ public:
 	AGameField* GField;
 
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<AActor> SignXActor;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<AActor> SignOActor;
-
 	AChess_GameMode();
 
 	// Called when the game starts or when spawned
@@ -80,5 +73,5 @@ public:
 	//reset the game
 	void ResetChess();
 protected:
-	AChessHUD* m_ChessHUD;
+	AChessHUD* ChessHUD;
 };

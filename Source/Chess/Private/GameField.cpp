@@ -111,8 +111,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BPawnClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -131,8 +129,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WRookClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -149,8 +145,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WRookClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -167,8 +161,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WKnightClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -184,8 +176,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WBishopClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -202,8 +192,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WQueenClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -220,8 +208,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(WKingClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -244,8 +230,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BRookClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -262,8 +246,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BKnightClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -279,8 +261,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BBishopClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -297,8 +277,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BQueenClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);
@@ -315,8 +293,6 @@ void AGameField::GeneratePieces()
 				{
 					FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
 					ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BKingClass, Location, FRotator::ZeroRotator);
-					//UMaterialInterface* Material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Materials/M_Marker_3"));
-					//Obj->SetMaterial(Material);
 					const float TileScale = TileSize / 100;
 					Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
 					Obj->SetPiecePosition(x, y);

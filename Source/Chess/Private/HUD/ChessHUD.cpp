@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Hud/ChessHUD.h"
-#include "Hud/Chess_InterfaceWidget.h"
+#include "HUD/ChessHUD.h"
+#include "HUD/Chess_InterfaceWidget.h"
 #include "Components/WidgetComponent.h"
 
 AChessHUD::AChessHUD()

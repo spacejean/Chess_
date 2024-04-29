@@ -28,9 +28,9 @@ void AChess_GameMode::BeginPlay()
 
 	MoveCounter = 0;
 
-
-	m_ChessHUD = Cast<AChessHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-	if (m_ChessHUD == nullptr)
+	
+	ChessHUD = Cast<AChessHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if (ChessHUD == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Chess HUD was null in Gamemode"));
 	}
