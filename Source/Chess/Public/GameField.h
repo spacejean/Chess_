@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Tile.h"
-#include "ChessKing.h"
-#include "ChessQueen.h"
-#include "ChessBishop.h"
-#include "ChessKnight.h"
-#include "ChessRook.h"
-#include "ChessPawn.h"
+#include "Pieces/ChessKing.h"
+#include "Pieces/ChessQueen.h"
+#include "Pieces/ChessBishop.h"
+#include "Pieces/ChessKnight.h"
+#include "Pieces/ChessRook.h"
+#include "Pieces/ChessPawn.h"
 #include "GameFramework/Actor.h"
 #include "GameField.generated.h"
 

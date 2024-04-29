@@ -3,7 +3,7 @@
 
 #include "GameField.h"
 #include "Kismet/GameplayStatics.h"
-#include "Chess_GameMode.h"
+#include "Managers/Chess_GameMode.h"
 
 // Sets default values
 AGameField::AGameField()
