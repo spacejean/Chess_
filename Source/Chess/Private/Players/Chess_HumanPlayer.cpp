@@ -91,8 +91,6 @@ void AChess_HumanPlayer::OnClick()
 		{
 			//salvo la posizione del pezzo colpito
 			FVector2D Location = ClickedBasePiece->GetGridPosition();
-			//stampo la posizione del pezzo colpito(riscordati di cancellare)
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("x=%f,y=%f"), Location[0], Location[1]));
 			
 			//salvo la posizione della Tile dove ho colpito il pezzo
 			ATile* CTile = GField->GetTileByLocation(Location);
@@ -112,10 +110,9 @@ void AChess_HumanPlayer::OnClick()
 			{
 				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("bianco"));
 				
-				
+				//Calcolo le mosse del pezzo colpito
 				ClickedBasePiece->CalculateMoves();
 				//Ho messo il cambio di turno del giocatore dentro le funzioni move e move2 della GameMode
-
 				//GameMode->TurnNextPlayer();
 			
 			
@@ -126,6 +123,7 @@ void AChess_HumanPlayer::OnClick()
 			if (PieceColor == EPieceColor::BLACK)
 			{
 
+				//Verifico se il pezzo originario(memPiece) è di colore bianco
 				if(memPiece->GetPieceColor() == EPieceColor::WHITE)
 				{
 				GameMode->movepiece2(ClickedBasePiece,memPiece);				
@@ -133,7 +131,7 @@ void AChess_HumanPlayer::OnClick()
 			}
 
 
-			//salvo il pezzo colpito per primeo dentro memPiece
+			//salvo il pezzo colpito per primo dentro memPiece
 			memPiece = ClickedBasePiece;
 
 			//Salvo la tile dove ho colpito il pezzo per primo
@@ -147,10 +145,10 @@ void AChess_HumanPlayer::OnClick()
 		if(memPiece !=  nullptr)
 		{
 
-			//verifico se l'oggeto colpito è di tipo Tile
+			//verifico se l'oggetto colpito è di tipo Tile
 		if (ATile* ClickedTile = Cast<ATile>(Hit.GetActor()))
 		{
-			//controllo se tra le mie possibile tile c'è una tile che appartenga ai possibili movimenti
+			//controllo se tra le mie possibile tile c'è una tile che appartenga alla tile che ho colpito
 
 			if (memPiece->GetPieceColor() == EPieceColor::WHITE)
 			{

@@ -18,9 +18,13 @@ protected:
 
 	virtual void NativeConstruct() override;
 	
+	
+	//Funzione per ricominciare una partita
 	UFUNCTION()
 	void Reset();
 
+
+	//Bottone per iniziare una nuova partita
 	UPROPERTY(meta = (BindWidget))
 	UButton* ResetButton;
 };

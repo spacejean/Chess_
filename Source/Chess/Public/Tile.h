@@ -8,12 +8,7 @@
 #include "BasePiece.h"
 #include "Tile.generated.h"
 
-UENUM()
-enum class ETileStatus : uint8
-{
-	EMPTY     UMETA(DisplayName = "Empty"),
-	OCCUPIED      UMETA(DisplayName = "Occupied"),
-};
+
 
 UCLASS()
 class CHESS_API ATile : public AActor
@@ -23,15 +18,6 @@ class CHESS_API ATile : public AActor
 public:
 	// Sets default values for this actor's properties
 	ATile();
-
-	// set the player owner and the status of a tile
-	void SetTileStatus(const int32 TileOwner, const ETileStatus TileStatus);
-
-	// get the tile status
-	ETileStatus GetTileStatus();
-
-	// get the tile owner
-	int32 GetOwner();
 
 	// set the (x, y) position
 	void SetGridPosition(const double InX, const double InY);
@@ -84,9 +70,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	UMaterialInstance* CurrentMaterial;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	ETileStatus Status;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 PlayerOwner;

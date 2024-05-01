@@ -38,22 +38,13 @@ void AChessRook::CalculateMoves()
             {
                 GameMode->GField->PossibleMoves.Add(Tile);
 
-                // Se richiesto, cambia il materiale della casella
-               // if (bDrawAvailableMoves && Tile)
-               // {
-               //     Tile->SetMaterial(2);
-               // }
+            
             }
             // Se c'è una pedina sulla casella, aggiungi la posizione ai possibili movimenti solo se la pedina è avversaria
             else if (Tile->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
             {
                 GameMode->GField->PossibleMoves.Add(Tile);
 
-                // Se richiesto, cambia il materiale della casella
-               // if (bDrawAvailableMoves)
-               // {
-               //     Tile->SetMaterial(3);
-               // }
 
                 // Non è possibile muoversi oltre questa casella
                 break;

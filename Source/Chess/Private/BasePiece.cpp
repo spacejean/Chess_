@@ -90,11 +90,6 @@ bool ABasePiece::IsValidBoardPosition(const FVector2D& Position) const
 }
 
 
-
-
-
-
-
 void ABasePiece::Eliminate()
 {
 	//this->Destroy();

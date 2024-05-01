@@ -64,10 +64,10 @@ public:
 	// return the game field object
 	AGameField* GetGameField() const;
 	
-	//move a piece
+	//move a piece to tile
 	void movepiece(ATile* tile, ABasePiece* piece);
 	
-
+	//move a piece to kill a piece opponent
 	void movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece);
 
 	//reset the game

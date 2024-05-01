@@ -17,11 +17,14 @@ void UChess_InterfaceWidget::NativeConstruct()
 void UChess_InterfaceWidget::Reset()
 {
     AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
-    if (GameMode == nullptr)
+    if (GameMode->CurrentPlayer == 0)
     {
-        UE_LOG(LogTemp, Error, TEXT("Gamemode was null in ResetLevel function in InterfaceWidget"));
-        return;
-    }
+        if (GameMode == nullptr)
+        {
+            UE_LOG(LogTemp, Error, TEXT("Gamemode was null in ResetLevel function in InterfaceWidget"));
+            return;
+        }
 
-    GameMode->ResetChess();
+        GameMode->ResetChess();
+    }
 }

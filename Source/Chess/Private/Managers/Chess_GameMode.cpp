@@ -106,32 +106,47 @@ AGameField* AChess_GameMode::GetGameField() const
 
 void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 {
+	// Ottieni un puntatore al GameMode di scacchi attuale
 	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
 	//TArray<ATile*> PMoves = GField->PossibleMoves;
-	for (auto* elem : GField->PossibleMoves) {
 
+	// Itera attraverso la lista di mosse possibili per la pedina selezionata
+	for (auto* elem : GField->PossibleMoves) 
+	{
 
-		if (tile->GetGridPosition() == elem->GetGridPosition()) {
+		// Controlla se la posizione della tile corrente coincide con la posizione della tile selezionata per il movimento
+		if (tile->GetGridPosition() == elem->GetGridPosition()) 
+		{
+			//coordinate della nuova posizione della pedina
 			int32 x = tile->GetGridPosition()[0];
 			int32 y = tile->GetGridPosition()[1];
 			
+			//coordinate della posizione  precedente della pedina
+
 			int32 px = piece->GetGridPosition()[0];
 			int32 py = piece->GetGridPosition()[1];
 
+			// Salva la posizione precedente della pedina
 			FVector2D positionb = FVector2D(px, py);
 			
+			// Calcola la nuova posizione della pedina in termini di coordinate del mondo
 			FVector position = FVector(x * 120, y * 120, 0.3);
+			// Imposta la posizione della pedina
 			piece->SetActorLocation(position);
+			// Rimuovi la pedina dalla casella precedente
 			GField->SelectedTile->SetOccupyingChessPiece(nullptr);
+			// Imposta la nuova posizione della pedina sulla nuova casella
 			piece->SetPiecePosition(x,y);
 			tile->SetOccupyingChessPiece(piece);
+			// Aggiorna la mappa delle pedine con la nuova posizione
 			GField->PieceMap.Add(FVector2D(x,y), piece);
 			GField->PieceMap.Remove(positionb);
 		}
 
 	}
-
+	// Ripristina i colori delle caselle a quelli predefiniti
 	GField->ResetTilesColor();
+	// Imposta il turno dell'altro giocatore
 	_IsMyTurn_ = false;
 	TurnNextPlayer();
 
@@ -143,6 +158,7 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 	 
 	for (auto* elem : GField->PossibleMoves)
 	{
+		// Controlla se la posizione della destinazione del movimento coincide con una delle mosse possibili
 		if (PieceB->GetGridPosition() == elem->GetGridPosition())
 		{
 			tempr = true;
@@ -150,7 +166,8 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 		
 	}
 
-	
+	// Se la destinazione del movimento non è valida, resetta i colori delle caselle
+	if (!tempr)
 	if (tempr == false)
 	{
 		GField->ResetTilesColor();
@@ -160,29 +177,36 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 	{
 		if(PieceB != nullptr)
 		{
+			// Controlla se c'è una pedina nella posizione di destinazione
 		if (GField->PieceMap.Contains(PieceB->GetGridPosition()))
 		{
+			//Muovi pedina attacante nella posizione della pedina avversaria
 		MyPiece->SetActorLocation(PieceB->GetActorLocation());
 		int32 x = PieceB->GetGridPosition()[0];
 		int32 y = PieceB->GetGridPosition()[1];
-		
+		// Rimuovi la pedina avversaria dalla mappa delle pedine e distruggila
 		GField->PieceMap.Remove(PieceB->GetGridPosition());
 		PieceB->Destroy();
 		GField->PieceArray.Remove(PieceB);
 		
-		
+		// Imposta la posizione della pedina attacante nella nuova posizione
 		MyPiece->SetPiecePosition(x, y);
 		GField->PieceMap.Add(MyPiece->GetGridPosition(), MyPiece);
 		GField->SelectedTile->SetOccupyingChessPiece(nullptr);
+
 		ATile* Tile = GField->GetTileByLocation(FVector2D(x, y));
 		Tile->SetOccupyingChessPiece(MyPiece);
+
 		GField->PieceMap.Shrink();
 		GField->PieceMap.Compact();
 
 		}
+
+		//resetta i colori delle tile
 		GField->ResetTilesColor();
 
 		
+		// Passa il turno al prossimo giocatore
 		_IsMyTurn_ = false;
 
 		TurnNextPlayer();
