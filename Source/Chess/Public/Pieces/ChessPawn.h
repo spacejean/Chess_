@@ -16,4 +16,5 @@ class CHESS_API AChessPawn : public ABasePiece
 	AChessPawn();
 	
 	virtual void CalculateMoves() override;
+	virtual void SimulateMoves() override;
 };

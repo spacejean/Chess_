@@ -79,6 +79,10 @@ void ABasePiece::CalculateMoves()
 {
 }
 
+void ABasePiece::SimulateMoves()
+{
+}
+
 TArray<FVector2D> ABasePiece::GetMovementDirections() const
 {
 	return TArray<FVector2D>();

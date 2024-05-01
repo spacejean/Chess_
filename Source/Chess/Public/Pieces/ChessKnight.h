@@ -19,5 +19,5 @@ public:
 	int32 counter = 0;
 	
 	virtual void CalculateMoves() override;
-	
+	virtual void SimulateMoves() override;
 };

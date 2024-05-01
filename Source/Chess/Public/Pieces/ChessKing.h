@@ -18,7 +18,7 @@ class CHESS_API AChessKing : public ABasePiece
 
 	//definisci le direzione di movimento possibili per i pezzi
 	virtual TArray<FVector2D> GetMovementDirections() const override;
-	
+	virtual void SimulateMoves() override;
 };
 
 

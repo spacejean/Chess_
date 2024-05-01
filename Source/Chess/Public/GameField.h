@@ -21,6 +21,8 @@ class CHESS_API AGameField : public AActor
 	GENERATED_BODY()
 
 public:
+
+
 	// keeps track of tiles
 	UPROPERTY(Transient)
 	TArray<ATile*> TileArray;
@@ -29,6 +31,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<ATile*> PossibleMoves;
 
+	// keep tracks of simulate moves
+	UPROPERTY(Transient)
+	TArray<ATile*> PossibleMoves2;
 
 	// keeps track of Pieces
 	UPROPERTY(Transient)
@@ -116,9 +121,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float TileSize;
 
-	// Sets default values for this actor's properties
-	AGameField();
 
+
+	AGameField();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -161,7 +166,9 @@ public:
 	ATile* GetTileByLocation(const FVector2D& Location) const;
 
 	
-
+	ABasePiece* WhiteKing;
+	ABasePiece* BlackKing;
+	
 	//public:	
 	//	// Called every frame
 	//	virtual void Tick(float DeltaTime) override;

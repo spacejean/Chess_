@@ -104,6 +104,12 @@ AGameField* AChess_GameMode::GetGameField() const
 	return GField;
 }
 
+void AChess_GameMode::ResetChess()
+{
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+}
+
+
 void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 {
 	// Ottieni un puntatore al GameMode di scacchi attuale
@@ -214,7 +220,116 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 	}
 }
 
-void AChess_GameMode::ResetChess()
+
+
+bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor)
 {
-	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+
+	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+	// setto il re del giocatore corrente
+	ABasePiece* King = nullptr;
+	if (GameMode->GField->WhiteKing->GetPieceType() == EPieceType::KING && GameMode->GField->WhiteKing->GetPieceColor() == PlayerColor)
+	{
+		King = GameMode->GField->WhiteKing;
+	}
+	else if (GameMode->GField->BlackKing->GetPieceType() == EPieceType::KING && GameMode->GField->BlackKing->GetPieceColor() == PlayerColor)
+	{
+		King = GameMode->GField->BlackKing;
+	}
+
+
+
+	if (!King)
+	{
+		// Il re non è stato trovato, quindi il giocatore non può essere in scacco
+		return false;
+	}
+
+	// Scansiona tutti i pezzi dell'altro giocatore
+
+	for (auto& Piece : GField->PieceArray)
+	{
+
+		if (Piece->GetPieceColor() != PlayerColor)
+		{
+			// Calcola le mosse possibili per il pezzo avversario
+			//Piece->CalculateMoves();
+			//creo una simulazione delle mosse 
+			Piece->SimulateMoves();
+
+			
+			// Controlla se una delle mosse possibili minaccia il re del giocatore corrente
+			for (auto& Move : GField->PossibleMoves2)
+			{
+				if (Move->GetGridPosition() == King->GetGridPosition())
+				{
+					// Il re è minacciato, quindi il giocatore è in scacco
+					return true;
+				}
+			}
+			//GField->ResetTilesColor();
+		}
+	}
+
+	// Nessuna minaccia al re è stata trovata, quindi il giocatore non è in scacco
+	return false;
+}
+
+
+bool AChess_GameMode::IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D NewPosition)
+{
+	// Salva lo stato attuale del gioco
+	// Trova il pezzo nella copia
+
+	//salvo la posizione attuale del pezzo
+	int32 mpx = MovedPiece->GetGridPosition()[0];
+	int32 mpy = MovedPiece->GetGridPosition()[1];
+	FVector2D OriginalPositionMovedPiece = FVector2D(mpx, mpy);
+
+
+	TArray<ABasePiece*> CopiedArray = GField->PieceArray;
+	ABasePiece* CopiedPiece = nullptr;
+	for (ABasePiece* Piece : GField->PieceArray)
+	{
+		if (Piece == MovedPiece)
+		{
+			CopiedPiece = Piece;
+			break;
+		}
+	}
+
+	int32 px = CopiedPiece->GetGridPosition()[0];
+	int32 py = CopiedPiece->GetGridPosition()[1];
+
+	FVector2D PositionCopiedPiece = FVector2D(px, py);
+	// Simula la mossa del pezzo sulla copia
+	if (CopiedPiece)
+	{
+
+		//ATile* OriginalTile = GField->GetTileByLocation(CopiedPiece->GetGridPosition());
+		ATile* OriginalTile = GField->GetTileByLocation(OriginalPositionMovedPiece);
+
+		ATile* NewTile = GField->GetTileByLocation(NewPosition);
+
+		OriginalTile->SetOccupyingChessPiece(nullptr);
+		NewTile->SetOccupyingChessPiece(CopiedPiece);
+		CopiedPiece->SetPiecePosition(NewPosition[0], NewPosition[1]);
+	}
+
+	// Controlla se il re del giocatore corrente è in scacco dopo la mossa
+	bool InCheckAfterMove = IsPlayerInCheck(MovedPiece->GetPieceColor());
+
+	// Ripristina lo stato precedente del gioco
+	if (CopiedPiece)
+	{
+		//ATile* OriginalTile = CopiedPiece->GetCurrentTile();
+		ATile* OriginalTile = GField->GetTileByLocation(OriginalPositionMovedPiece);
+		ATile* NewTile = GField->GetTileByLocation(NewPosition);
+		NewTile->SetOccupyingChessPiece(nullptr);
+		OriginalTile->SetOccupyingChessPiece(MovedPiece);
+		CopiedPiece->SetPiecePosition(OriginalTile->GetGridPosition()[0], OriginalTile->GetGridPosition()[1]);
+	}
+	GField->PieceArray = CopiedArray;
+
+	return InCheckAfterMove;
 }

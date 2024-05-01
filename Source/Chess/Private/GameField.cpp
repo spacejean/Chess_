@@ -122,7 +122,21 @@ void AGameField::GeneratePieces()
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
 				}
-
+			else if ((x == 4) && (y == 0))
+			{
+				FVector Location = AGameField::GetRelativeLocationByXYPosition(x, y);
+				ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(BBishopClass, Location, FRotator::ZeroRotator);
+				const float TileScale = TileSize / 100;
+				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
+				Obj->SetPiecePosition(x, y);
+				Obj->SetPieceColor(EPieceColor::BLACK);
+				Obj->SetPieceType(EPieceType::BISHOP);
+				FVector2D PieceLocation = Obj->GetGridPosition();
+				ATile* Tile = GetTileByLocation(PieceLocation);
+				Tile->SetOccupyingChessPiece(Obj);
+				PieceArray.Add(Obj);
+				PieceMap.Add(FVector2D(x, y), Obj);
+			}
 			else if (x == 0)
 			{
 				if (y == 0) 
@@ -218,6 +232,7 @@ void AGameField::GeneratePieces()
 					Tile->SetOccupyingChessPiece(Obj);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
+					WhiteKing = Obj;
 				}
 
 
@@ -303,6 +318,7 @@ void AGameField::GeneratePieces()
 					Tile->SetOccupyingChessPiece(Obj);
 					PieceArray.Add(Obj);
 					PieceMap.Add(FVector2D(x, y), Obj);
+					BlackKing = Obj;
 				}
 
 

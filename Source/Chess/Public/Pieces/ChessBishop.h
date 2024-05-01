@@ -16,4 +16,5 @@ class CHESS_API AChessBishop : public ABasePiece
 	GENERATED_BODY()
 
 	virtual void CalculateMoves() override;
+	virtual void SimulateMoves() override;
 };

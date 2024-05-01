@@ -62,6 +62,8 @@ public:
 
 	virtual void CalculateMoves();
 
+	virtual void SimulateMoves();
+
 	//define the possible direction of movement for the pieces
 	virtual TArray<FVector2D> GetMovementDirections() const;
 	

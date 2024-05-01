@@ -70,6 +70,11 @@ public:
 	//move a piece to kill a piece opponent
 	void movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece);
 
+	//checks if the player is in check
+	bool IsPlayerInCheck(EPieceColor PlayerColor);
+
+	bool IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D NewPosition);
+
 	//reset the game
 	void ResetChess();
 protected:
