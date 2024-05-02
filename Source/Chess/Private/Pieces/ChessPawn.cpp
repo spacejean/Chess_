@@ -50,7 +50,12 @@ void AChessPawn::CalculateMoves()
             ATile* DoubleForwardTile = GameMode->GField->GetTileByLocation(DoubleForwardSquare);
             if (DoubleForwardTile && !DoubleForwardTile->GetOccupyingChessPiece())
             {
-                GameMode->GField->PossibleMoves.Add(DoubleForwardTile);
+                int32 x2 = DoubleForwardTile->GetGridPosition()[0];
+                int32 y2 = DoubleForwardTile->GetGridPosition()[1];
+                if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x2, y2)))
+                {
+                    GameMode->GField->PossibleMoves.Add(DoubleForwardTile);
+                }
               
             }
         }
