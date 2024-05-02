@@ -205,7 +205,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	EPieceColor ColorR = piece->GetPieceColor();
 	if(ColorR == EPieceColor::WHITE)
 	{
-	if (IsPlayerInCheck(EPieceColor::BLACK))
+	if (IsPlayerInCheck(EPieceColor::BLACK, piece->GetGridPosition()))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("AI Check!"));
 		GameInstance1->SetCheckMessage(TEXT("AI Check!"));
@@ -216,7 +216,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	}
 	else if (ColorR == EPieceColor::BLACK)
 	{
-		if (IsPlayerInCheck(EPieceColor::WHITE))
+		if (IsPlayerInCheck(EPieceColor::WHITE,piece->GetGridPosition()))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("AI Check!"));
 			GameInstance1->SetCheckMessage(TEXT("Human Check!"));
@@ -327,7 +327,7 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 
 		FTimerHandle CheckMessageTimerHandle;
 		const float MessageDisplayTime = 5.0f;
-		if (IsPlayerInCheck(PieceB->GetPieceColor()))
+		if (IsPlayerInCheck(PieceB->GetPieceColor(),PieceB->GetGridPosition()))
 		{
 			if (PieceB->GetPieceColor() == EPieceColor::BLACK)
 			{
@@ -358,7 +358,7 @@ void AChess_GameMode::ClearCheckMessage()
 	GameInstance1->SetCheckMessage(TEXT("")); // Cancella il messaggio impostando una stringa vuota
 }
 
-bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor)
+bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor, FVector2D NewPosition_)
 {
 
 	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
@@ -385,7 +385,8 @@ bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor)
 
 	for (auto& Piece : GField->PieceArray)
 	{
-
+		if(Piece->GetGridPosition() != NewPosition_)
+		{
 		if (Piece->GetPieceColor() != PlayerColor)
 		{
 			// Calcola le mosse possibili per il pezzo avversario
@@ -404,6 +405,7 @@ bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor)
 				}
 			}
 			//GField->ResetTilesColor();
+		}
 		}
 	}
 
@@ -455,7 +457,7 @@ bool AChess_GameMode::IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D
 	}
 
 	// Controlla se il re del giocatore corrente è in scacco dopo la mossa
-	bool InCheckAfterMove = IsPlayerInCheck(MovedPiece->GetPieceColor());
+	bool InCheckAfterMove = IsPlayerInCheck(MovedPiece->GetPieceColor(), NewPosition);
 
 	// Ripristina lo stato precedente del gioco
 	if (CopiedPiece)

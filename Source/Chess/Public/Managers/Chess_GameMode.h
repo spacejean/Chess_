@@ -79,7 +79,7 @@ public:
 	void ClearCheckMessage();
 
 	//checks if the player is in check
-	bool IsPlayerInCheck(EPieceColor PlayerColor);
+	bool IsPlayerInCheck(EPieceColor PlayerColor, FVector2D NewPosition_);
 
 	bool IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D NewPosition);
 
