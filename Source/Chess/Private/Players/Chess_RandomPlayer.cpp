@@ -116,6 +116,7 @@ void AChess_RandomPlayer::OnTurn()
 				}
 
 				 }
+				 //TODO: devo controllare se esistono ancora mosse possibili, altrimenti è scacco matto
 			}
 
 			
