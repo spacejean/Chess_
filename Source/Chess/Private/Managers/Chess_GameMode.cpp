@@ -81,7 +81,10 @@ void AChess_GameMode::ChoosePlayerAndStartGame()
 	Players[CurrentPlayer]->OnTurn();
 }
 
-
+int32 AChess_GameMode::GetCurrentPlayer() const
+{
+	return CurrentPlayer;
+}
 
 
 int32 AChess_GameMode::GetNextPlayer(int32 Player)
@@ -195,9 +198,33 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	// Ripristina i colori delle caselle a quelli predefiniti
 	GField->ResetTilesColor();
 
-	//parte promozione del pedone
 
+	FTimerHandle CheckMessageTimerHandle;
+	const float MessageDisplayTime = 5.0f;
 	
+	EPieceColor ColorR = piece->GetPieceColor();
+	if(ColorR == EPieceColor::WHITE)
+	{
+	if (IsPlayerInCheck(EPieceColor::BLACK))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("AI Check!"));
+		GameInstance1->SetCheckMessage(TEXT("AI Check!"));
+		// Avvia un timer per cancellare il messaggio dopo il periodo di tempo desiderato
+		GetWorldTimerManager().SetTimer(CheckMessageTimerHandle, this, &AChess_GameMode::ClearCheckMessage, MessageDisplayTime, false);
+
+	}
+	}
+	else if (ColorR == EPieceColor::BLACK)
+	{
+		if (IsPlayerInCheck(EPieceColor::WHITE))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("AI Check!"));
+			GameInstance1->SetCheckMessage(TEXT("Human Check!"));
+			// Avvia un timer per cancellare il messaggio dopo il periodo di tempo desiderato
+				GetWorldTimerManager().SetTimer(CheckMessageTimerHandle, this, &AChess_GameMode::ClearCheckMessage, MessageDisplayTime, false);
+
+		}
+	}
 
 	// Imposta il turno dell'altro giocatore
 	_IsMyTurn_ = false;
@@ -302,11 +329,20 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 		const float MessageDisplayTime = 5.0f;
 		if (IsPlayerInCheck(PieceB->GetPieceColor()))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Check!"));
-			GameInstance1->SetCheckMessage(TEXT("Check!"));
-			// Avvia un timer per cancellare il messaggio dopo il periodo di tempo desiderato
-			GetWorldTimerManager().SetTimer(CheckMessageTimerHandle, this, &AChess_GameMode::ClearCheckMessage, MessageDisplayTime, false);
-
+			if (PieceB->GetPieceColor() == EPieceColor::BLACK)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Check!"));
+				GameInstance1->SetCheckMessage(TEXT("AI Check!"));
+				// Avvia un timer per cancellare il messaggio dopo il periodo di tempo desiderato
+				GetWorldTimerManager().SetTimer(CheckMessageTimerHandle, this, &AChess_GameMode::ClearCheckMessage, MessageDisplayTime, false);
+			}
+			else if (PieceB->GetPieceColor() == EPieceColor::WHITE)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Human Check!"));
+				GameInstance1->SetCheckMessage(TEXT("Human Check!"));
+				// Avvia un timer per cancellare il messaggio dopo il periodo di tempo desiderato
+				GetWorldTimerManager().SetTimer(CheckMessageTimerHandle, this, &AChess_GameMode::ClearCheckMessage, MessageDisplayTime, false);
+			}
 		}
 
 		// Passa il turno al prossimo giocatore

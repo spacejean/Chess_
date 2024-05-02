@@ -57,6 +57,9 @@ public:
 	// called at the start of the game
 	void ChoosePlayerAndStartGame();
 
+	int32 GetCurrentPlayer() const;
+
+
 
 	// get the next player index
 	int32 GetNextPlayer(int32 Player);
