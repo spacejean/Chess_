@@ -147,11 +147,55 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 			// Aggiorna la mappa delle pedine con la nuova posizione
 			GField->PieceMap.Add(FVector2D(x,y), piece);
 			GField->PieceMap.Remove(positionb);
+
+			FVector2D PositionPiece = piece->GetGridPosition();
+			//PARTE PER IL PEDONE A FINE SCACCHIERA
+			if (PositionPiece.X == 7 && piece->GetPieceColor() == EPieceColor::WHITE && piece->GetPieceType() == EPieceType::PAWN)
+			{
+				FVector Location = GField->GetRelativeLocationByXYPosition(PositionPiece.X, PositionPiece.Y);
+				ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(GField->WQueenClass, Location, FRotator::ZeroRotator);
+				const float TileScale = GField->TileSize / 100;
+				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
+				Obj->SetPiecePosition(PositionPiece.X, PositionPiece.Y);
+				Obj->SetPieceColor(EPieceColor::WHITE);
+				Obj->SetPieceType(EPieceType::QUEEN);
+				FVector2D PieceLocation = Obj->GetGridPosition();
+				ATile* Tile = GField->GetTileByLocation(PieceLocation);
+				Tile->SetOccupyingChessPiece(Obj);
+				GField->PieceArray.Add(Obj);
+				GField->PieceMap.Add(FVector2D(PositionPiece.X, PositionPiece.Y), Obj);
+				GField->PieceMap.Remove(piece->GetGridPosition());
+				piece->Destroy();
+				GField->PieceArray.Remove(piece);
+			}
+			else if (PositionPiece.X == 0 && piece->GetPieceColor() == EPieceColor::BLACK && piece->GetPieceType() == EPieceType::PAWN)
+			{
+				FVector Location = GField->GetRelativeLocationByXYPosition(PositionPiece.X, PositionPiece.Y);
+				ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(GField->BQueenClass, Location, FRotator::ZeroRotator);
+				const float TileScale = GField->TileSize / 100;
+				Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
+				Obj->SetPiecePosition(PositionPiece.X, PositionPiece.Y);
+				Obj->SetPieceColor(EPieceColor::BLACK);
+				Obj->SetPieceType(EPieceType::QUEEN);
+				FVector2D PieceLocation = Obj->GetGridPosition();
+				ATile* Tile = GField->GetTileByLocation(PieceLocation);
+				Tile->SetOccupyingChessPiece(Obj);
+				GField->PieceArray.Add(Obj);
+				GField->PieceMap.Add(FVector2D(PositionPiece.X, PositionPiece.Y), Obj);
+				GField->PieceMap.Remove(piece->GetGridPosition());
+				piece->Destroy();
+				GField->PieceArray.Remove(piece);
+			}
+
 		}
 
 	}
 	// Ripristina i colori delle caselle a quelli predefiniti
 	GField->ResetTilesColor();
+
+	//parte promozione del pedone
+
+
 	// Imposta il turno dell'altro giocatore
 	_IsMyTurn_ = false;
 	TurnNextPlayer();
@@ -205,6 +249,46 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 
 		GField->PieceMap.Shrink();
 		GField->PieceMap.Compact();
+
+		FVector2D PositionPiece = MyPiece->GetGridPosition();
+		
+		//PARTE PER IL PEDONE A FINE SCACCHIERA "fORZA BRUTA"
+		if (PositionPiece.X == 7 && MyPiece->GetPieceColor() == EPieceColor::WHITE && MyPiece->GetPieceType() == EPieceType::PAWN)
+		{
+			FVector Location = GField->GetRelativeLocationByXYPosition(PositionPiece.X, PositionPiece.Y);
+			ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(GField->WQueenClass, Location, FRotator::ZeroRotator);
+			const float TileScale = GField->TileSize / 100;
+			Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
+			Obj->SetPiecePosition(PositionPiece.X, PositionPiece.Y);
+			Obj->SetPieceColor(EPieceColor::WHITE);
+			Obj->SetPieceType(EPieceType::QUEEN);
+			FVector2D PieceLocation = Obj->GetGridPosition();
+			ATile* Tile1 = GField->GetTileByLocation(PieceLocation);
+			Tile1->SetOccupyingChessPiece(Obj);
+			GField->PieceArray.Add(Obj);
+			GField->PieceMap.Add(FVector2D(PositionPiece.X, PositionPiece.Y), Obj);
+			GField->PieceMap.Remove(MyPiece->GetGridPosition());
+			MyPiece->Destroy();
+			GField->PieceArray.Remove(MyPiece);
+		}
+		else if (PositionPiece.X == 0 && MyPiece->GetPieceColor() == EPieceColor::BLACK && MyPiece->GetPieceType() == EPieceType::PAWN)
+		{
+			FVector Location = GField->GetRelativeLocationByXYPosition(PositionPiece.X, PositionPiece.Y);
+			ABasePiece* Obj = GetWorld()->SpawnActor<ABasePiece>(GField->BQueenClass, Location, FRotator::ZeroRotator);
+			const float TileScale = GField->TileSize / 100;
+			Obj->SetActorScale3D(FVector(TileScale, TileScale, 0.3));
+			Obj->SetPiecePosition(PositionPiece.X, PositionPiece.Y);
+			Obj->SetPieceColor(EPieceColor::BLACK);
+			Obj->SetPieceType(EPieceType::QUEEN);
+			FVector2D PieceLocation = Obj->GetGridPosition();
+			ATile* Tile1 = GField->GetTileByLocation(PieceLocation);
+			Tile1->SetOccupyingChessPiece(Obj);
+			GField->PieceArray.Add(Obj);
+			GField->PieceMap.Add(FVector2D(PositionPiece.X, PositionPiece.Y), Obj);
+			GField->PieceMap.Remove(MyPiece->GetGridPosition());
+			MyPiece->Destroy();
+			GField->PieceArray.Remove(MyPiece);
+		}
 
 		}
 
