@@ -205,7 +205,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	EPieceColor ColorR = piece->GetPieceColor();
 	if(ColorR == EPieceColor::WHITE)
 	{
-	if (IsPlayerInCheck(EPieceColor::BLACK, piece->GetGridPosition()))
+	if (IsPlayerInCheck2(EPieceColor::BLACK))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("AI Check!"));
 		GameInstance1->SetCheckMessage(TEXT("AI Check!"));
@@ -216,7 +216,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 	}
 	else if (ColorR == EPieceColor::BLACK)
 	{
-		if (IsPlayerInCheck(EPieceColor::WHITE,piece->GetGridPosition()))
+		if (IsPlayerInCheck2(EPieceColor::WHITE))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("AI Check!"));
 			GameInstance1->SetCheckMessage(TEXT("Human Check!"));
@@ -327,7 +327,7 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 
 		FTimerHandle CheckMessageTimerHandle;
 		const float MessageDisplayTime = 5.0f;
-		if (IsPlayerInCheck(PieceB->GetPieceColor(),PieceB->GetGridPosition()))
+		if (IsPlayerInCheck2(PieceB->GetPieceColor()))
 		{
 			if (PieceB->GetPieceColor() == EPieceColor::BLACK)
 			{
@@ -413,6 +413,61 @@ bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor, FVector2D NewPosi
 	return false;
 }
 
+
+bool AChess_GameMode::IsPlayerInCheck2(EPieceColor PlayerColor)
+{
+
+	AChess_GameMode* GameMode = Cast<AChess_GameMode>(GetWorld()->GetAuthGameMode());
+	// setto il re del giocatore corrente
+	ABasePiece* King = nullptr;
+	if (GameMode->GField->WhiteKing->GetPieceType() == EPieceType::KING && GameMode->GField->WhiteKing->GetPieceColor() == PlayerColor)
+	{
+		King = GameMode->GField->WhiteKing;
+	}
+	else if (GameMode->GField->BlackKing->GetPieceType() == EPieceType::KING && GameMode->GField->BlackKing->GetPieceColor() == PlayerColor)
+	{
+		King = GameMode->GField->BlackKing;
+	}
+
+
+
+	if (!King)
+	{
+		// Il re non è stato trovato, quindi il giocatore non può essere in scacco
+		return false;
+	}
+
+	// Scansiona tutti i pezzi dell'altro giocatore
+
+	for (auto& Piece : GField->PieceArray)
+	{
+		
+		
+			if (Piece->GetPieceColor() != PlayerColor)
+			{
+				// Calcola le mosse possibili per il pezzo avversario
+				//Piece->CalculateMoves();
+				//creo una simulazione delle mosse 
+				Piece->SimulateMoves();
+
+
+				// Controlla se una delle mosse possibili minaccia il re del giocatore corrente
+				for (auto& Move : GField->PossibleMoves2)
+				{
+					if (Move->GetGridPosition() == King->GetGridPosition())
+					{
+						// Il re è minacciato, quindi il giocatore è in scacco
+						return true;
+					}
+				}
+				//GField->ResetTilesColor();
+			}
+		
+	}
+
+	// Nessuna minaccia al re è stata trovata, quindi il giocatore non è in scacco
+	return false;
+}
 
 bool AChess_GameMode::IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D NewPosition)
 {

@@ -81,6 +81,8 @@ public:
 	//checks if the player is in check
 	bool IsPlayerInCheck(EPieceColor PlayerColor, FVector2D NewPosition_);
 
+	bool IsPlayerInCheck2(EPieceColor PlayerColor);
+
 	bool IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D NewPosition);
 
 	//reset the game
