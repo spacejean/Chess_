@@ -34,19 +34,25 @@ void AChessQueen::CalculateMoves()
         while (IsValidBoardPosition(NewPosition))
         {
             ATile* Tile = GameMode->GField->GetTileByLocation(NewPosition);
-
+            int32 x1 = Tile->GetGridPosition()[0];
+            int32 y1 = Tile->GetGridPosition()[1];
             // Se non c'è una casella o se la casella è vuota, aggiungi la posizione ai possibili movimenti
             if (!Tile || !Tile->GetOccupyingChessPiece())
             {
-                GameMode->GField->PossibleMoves.Add(Tile);
+                if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x1, y1)))
+                {
 
+                    GameMode->GField->PossibleMoves.Add(Tile);
+                }
                
             }
             // Se c'è una pedina sulla casella, aggiungi la posizione ai possibili movimenti solo se la pedina è avversaria
             else if (Tile->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
             {
-                GameMode->GField->PossibleMoves.Add(Tile);
-
+                if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x1, y1)))
+                {
+                    GameMode->GField->PossibleMoves.Add(Tile);
+                }
                 
 
                 // Non è possibile muoversi oltre questa casella

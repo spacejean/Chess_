@@ -34,14 +34,14 @@ void AChessPawn::CalculateMoves()
     if (ForwardTile && !ForwardTile->GetOccupyingChessPiece())
     {
         //controllo se 
-        int32 x3 = ForwardTile->GetGridPosition()[0];
-        int32 y3 = ForwardTile->GetGridPosition()[1];
+        int32 x1 = ForwardTile->GetGridPosition()[0];
+        int32 y1 = ForwardTile->GetGridPosition()[1];
 
-        if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x3, y3)))
+        if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x1, y1)))
         {
         GameMode->GField->PossibleMoves.Add(ForwardTile);
        
-
+      
         // Se il pedone è nella posizione iniziale, verifica se può avanzare di due caselle
         if ((GetPieceColor() == EPieceColor::WHITE && CurrentPosition.X == 1) ||
             (GetPieceColor() == EPieceColor::BLACK && CurrentPosition.X == 6))
@@ -55,6 +55,7 @@ void AChessPawn::CalculateMoves()
             }
         }
         }
+        
     }
 
     // Verifica le mosse di attacco del pedone
@@ -66,8 +67,12 @@ void AChessPawn::CalculateMoves()
         if (AttackTile && AttackTile->GetOccupyingChessPiece() &&
             AttackTile->GetOccupyingChessPiece()->GetPieceColor() != GetPieceColor())
         {
-            GameMode->GField->PossibleMoves.Add(AttackTile);
-           
+            int32 x0 = AttackTile->GetGridPosition()[0];
+            int32 y0 = AttackTile->GetGridPosition()[1];
+            if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x0, y0)))
+            {
+                GameMode->GField->PossibleMoves.Add(AttackTile);
+            }
         }
     }
 

@@ -29,23 +29,28 @@ void AChessKing::CalculateMoves()
         if (IsValidBoardPosition(NewPosition))
         {
             ATile* Tile = GameMode->GField->GetTileByLocation(NewPosition);
-
+            int32 x1 = Tile->GetGridPosition()[0];
+            int32 y1 = Tile->GetGridPosition()[1];
             // Se la casella esiste e non è occupata dallo stesso team, aggiungi la posizione ai possibili movimenti
             if (Tile)
             {
                 if (!Tile->GetOccupyingChessPiece())
                 {
-                    // Casella libera
-                    GameMode->GField->PossibleMoves.Add(Tile);
-
-                  
+                    if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x1, y1)))
+                    {
+                        // Casella libera
+                        GameMode->GField->PossibleMoves.Add(Tile);
+                    }
 
                 }
+                
                 else if (Tile->GetOccupyingChessPiece()->GetPieceColor() != this->GetPieceColor())
                 {
-                    // Casella occupata da un pezzo avversario
-                    GameMode->GField->PossibleMoves.Add(Tile);
-
+                        if (!GameMode->IsPlayerInCheckAfterMove(this, FVector2D(x1, y1)))
+                        {
+                        // Casella occupata da un pezzo avversario
+                        GameMode->GField->PossibleMoves.Add(Tile);
+                        }
 
                 }
             }

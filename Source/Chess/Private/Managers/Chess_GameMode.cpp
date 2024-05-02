@@ -387,6 +387,8 @@ bool AChess_GameMode::IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D
 
 	FVector2D PositionCopiedPiece = FVector2D(px, py);
 	// Simula la mossa del pezzo sulla copia
+	ATile* NewTile1 = GField->GetTileByLocation(NewPosition);
+	ABasePiece* OriginalPieceOnTile = NewTile1->GetOccupyingChessPiece();
 	if (CopiedPiece)
 	{
 
@@ -394,7 +396,7 @@ bool AChess_GameMode::IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D
 		ATile* OriginalTile = GField->GetTileByLocation(OriginalPositionMovedPiece);
 
 		ATile* NewTile = GField->GetTileByLocation(NewPosition);
-
+		
 		OriginalTile->SetOccupyingChessPiece(nullptr);
 		NewTile->SetOccupyingChessPiece(CopiedPiece);
 		CopiedPiece->SetPiecePosition(NewPosition[0], NewPosition[1]);
@@ -409,7 +411,7 @@ bool AChess_GameMode::IsPlayerInCheckAfterMove(ABasePiece* MovedPiece, FVector2D
 		//ATile* OriginalTile = CopiedPiece->GetCurrentTile();
 		ATile* OriginalTile = GField->GetTileByLocation(OriginalPositionMovedPiece);
 		ATile* NewTile = GField->GetTileByLocation(NewPosition);
-		NewTile->SetOccupyingChessPiece(nullptr);
+		NewTile->SetOccupyingChessPiece(OriginalPieceOnTile);
 		OriginalTile->SetOccupyingChessPiece(MovedPiece);
 		CopiedPiece->SetPiecePosition(OriginalTile->GetGridPosition()[0], OriginalTile->GetGridPosition()[1]);
 	}
