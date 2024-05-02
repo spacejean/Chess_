@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Players/Chess_PlayerInterface.h"
+#include "Managers/Chess_GameInstance.h"
 #include "GameField.h"
 #include "BasePiece.h"
 #include "Hud/ChessHUD.h"
@@ -32,6 +33,8 @@ public:
 
 	// keeps track of turn
 	bool _IsMyTurn_ = false;
+	// game instance reference
+	UChess_GameInstance* GameInstance1;
 
 	// TSubclassOf is a template class that provides UClass type safety.
 	UPROPERTY(EditDefaultsOnly)
@@ -69,6 +72,8 @@ public:
 	
 	//move a piece to kill a piece opponent
 	void movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece);
+
+	void ClearCheckMessage();
 
 	//checks if the player is in check
 	bool IsPlayerInCheck(EPieceColor PlayerColor);

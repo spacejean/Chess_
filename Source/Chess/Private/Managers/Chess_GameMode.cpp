@@ -17,6 +17,8 @@ AChess_GameMode::AChess_GameMode()
 	PlayerControllerClass = AChess_PlayerController::StaticClass();
 	DefaultPawnClass = AChess_HumanPlayer::StaticClass();
 	FieldSize = 8;
+	// get the game instance reference
+	GameInstance1 = Cast<UChess_GameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 
@@ -149,7 +151,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 			GField->PieceMap.Remove(positionb);
 
 			FVector2D PositionPiece = piece->GetGridPosition();
-			//PARTE PER IL PEDONE A FINE SCACCHIERA
+			//PARTE PER LA PROMOZIONE DEL PEDONE BIANCO "fORZA BRUTA"
 			if (PositionPiece.X == 7 && piece->GetPieceColor() == EPieceColor::WHITE && piece->GetPieceType() == EPieceType::PAWN)
 			{
 				FVector Location = GField->GetRelativeLocationByXYPosition(PositionPiece.X, PositionPiece.Y);
@@ -195,6 +197,7 @@ void AChess_GameMode::movepiece(ATile* tile, ABasePiece* piece)
 
 	//parte promozione del pedone
 
+	
 
 	// Imposta il turno dell'altro giocatore
 	_IsMyTurn_ = false;
@@ -252,7 +255,7 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 
 		FVector2D PositionPiece = MyPiece->GetGridPosition();
 		
-		//PARTE PER IL PEDONE A FINE SCACCHIERA "fORZA BRUTA"
+		//PARTE PER LA PROMOZIONE DEL PEDONE NERO "fORZA BRUTA"
 		if (PositionPiece.X == 7 && MyPiece->GetPieceColor() == EPieceColor::WHITE && MyPiece->GetPieceType() == EPieceType::PAWN)
 		{
 			FVector Location = GField->GetRelativeLocationByXYPosition(PositionPiece.X, PositionPiece.Y);
@@ -295,7 +298,17 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 		//resetta i colori delle tile
 		GField->ResetTilesColor();
 
-		
+		FTimerHandle CheckMessageTimerHandle;
+		const float MessageDisplayTime = 5.0f;
+		if (IsPlayerInCheck(PieceB->GetPieceColor()))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Check!"));
+			GameInstance1->SetCheckMessage(TEXT("Check!"));
+			// Avvia un timer per cancellare il messaggio dopo il periodo di tempo desiderato
+			GetWorldTimerManager().SetTimer(CheckMessageTimerHandle, this, &AChess_GameMode::ClearCheckMessage, MessageDisplayTime, false);
+
+		}
+
 		// Passa il turno al prossimo giocatore
 		_IsMyTurn_ = false;
 
@@ -304,7 +317,10 @@ void AChess_GameMode::movepiece2(ABasePiece* PieceB, ABasePiece* MyPiece)
 	}
 }
 
-
+void AChess_GameMode::ClearCheckMessage()
+{
+	GameInstance1->SetCheckMessage(TEXT("")); // Cancella il messaggio impostando una stringa vuota
+}
 
 bool AChess_GameMode::IsPlayerInCheck(EPieceColor PlayerColor)
 {

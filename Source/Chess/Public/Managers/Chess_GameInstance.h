@@ -26,6 +26,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	FString CurrentTurnMessage = "Current Player";
 
+	// message to show the check
+	UPROPERTY(EditAnywhere)
+	FString CheckMessage = "";
+
 	// increment the score for human player
 	void IncrementScoreHumanPlayer();
 
@@ -43,8 +47,14 @@ public:
 	// get the current turn message
 	UFUNCTION(BlueprintCallable)
 	FString GetTurnMessage();
+	
+	// get the check message
+	UFUNCTION(BlueprintCallable)
+	FString GetCheckMessage();
+
 
 	// set the turn message
 	UFUNCTION(BlueprintCallable)
 	void SetTurnMessage(FString Message);
+	void SetCheckMessage(FString Message);
 };
